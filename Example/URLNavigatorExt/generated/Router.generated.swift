@@ -1,7 +1,7 @@
 // Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
-// Create Time: 2019-11-28 12:47:25
+// Create Time: 2019-11-28 16:10:26
 import URLNavigatorExt
 import URLNavigator
 
@@ -52,7 +52,7 @@ public enum Router {
 
     /// MARK: parameter type dic
     static let urlParas: [String: Parameterible.Type?] = [
-        Router.home_page: Router.PRHome_page.self,
+        Router.home_page: Router.PRHome_Page.self,
         Router.page01: nil,
         Router.page02: Router.PRPage02.self
     ]
@@ -61,7 +61,7 @@ public enum Router {
     /// view: ViewController
     /// path: /home
     /// name: home_page
-    public struct PRHome_page: Parameterible {
+    public struct PRHome_Page: Parameterible {
         var blk: (()->Void)?
         var p7: Int64
         var p6: Test2Enum
@@ -72,14 +72,14 @@ public enum Router {
         var type: TestEnum
 
         init(
-            type: TestEnum ,
-            p6: Test2Enum ,
-            p7: Int64 ,
-            type1: TestEnum?  = nil,
-            p3: String?  = nil,
-            p4: String?  = nil,
-            p5: Test2Enum?  = nil,
-            blk: (()->Void)?  = nil
+            type: TestEnum,
+            p6: Test2Enum,
+            p7: Int64,
+            type1: TestEnum? = nil,
+            p3: String? = nil,
+            p4: String? = nil,
+            p5: Test2Enum? = nil,
+            blk: (()->Void)? = nil
         ) {
             self.blk = blk
             self.p7 = p7
@@ -95,47 +95,47 @@ public enum Router {
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
             let dict = [String: String](uniqueKeysWithValues: items)
             var _type: TestEnum? = .a
-            if let value = dict["type"]{
+            if let value = dict["type"] {
                 if let _enum = TestEnum(rawValue: value) {
                     _type = _enum
                 }
             }
             var _p6: Test2Enum? = .d
-            if let value = dict["p6"]{
+            if let value = dict["p6"] {
                 if let _value = Int(value), let _enum = Test2Enum(rawValue: _value) {
                     _p6 = _enum
                 }
             }
             var _p7: Int64? = nil
-            if let value = dict["p7"]{
+            if let value = dict["p7"] {
                 _p7 = Int64(value)
             }
             var type1: TestEnum? = .b
-            if let value = dict["type1"]{
+            if let value = dict["type1"] {
                 if let _enum = TestEnum(rawValue: value) {
                     type1 = _enum
                 }
             }
             var p3: String? = "abc123"
-            if let value = dict["p3"]{
+            if let value = dict["p3"] {
                 p3 = value
             }
             var p4: String? = ""
-            if let value = dict["p4"]{
+            if let value = dict["p4"] {
                 p4 = value
             }
             var p5: Test2Enum? = .c
-            if let value = dict["p5"]{
+            if let value = dict["p5"] {
                 if let _value = Int(value), let _enum = Test2Enum(rawValue: _value) {
                     p5 = _enum
                 }
             }
-            guard 
+            guard
                 let type = _type,
                 let p6 = _p6,
                 let p7 = _p7
-            else { return nil}
-            return PRHome_page(
+            else { return nil }
+            return PRHome_Page(
                 type: type,
                 p6: p6,
                 p7: p7,
@@ -157,8 +157,8 @@ public enum Router {
         var uid: Int64
 
         init(
-            uid: Int64 ,
-            name: String 
+            uid: Int64,
+            name: String
         ) {
             self.name = name
             self.uid = uid
@@ -168,17 +168,17 @@ public enum Router {
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
             let dict = [String: String](uniqueKeysWithValues: items)
             var _uid: Int64? = 0
-            if let value = dict["uid"]{
+            if let value = dict["uid"] {
                 _uid = Int64(value)
             }
             var _name: String? = "这是一个测试参数"
-            if let value = dict["name"]{
+            if let value = dict["name"] {
                 _name = value
             }
-            guard 
+            guard
                 let uid = _uid,
                 let name = _name
-            else { return nil}
+            else { return nil }
             return PRPage02(
                 uid: uid,
                 name: name

@@ -5,14 +5,15 @@ let routeible = "Navigatorible"
 let parameterible = "Parameterible"
 let typeible = "Typeible"
 
-func capitalizedName(for variable: Variable) -> String {
-    return "\(String(variable.name.first!).capitalized)\(String(variable.name.dropFirst()))"
-}
-
 extension String {
     func capitaliz() -> String {
         var temp = self
-        return "\(String(temp.first!).capitalized)\(String(temp.dropFirst()))"
+        return "\(String(temp.first!).capitalized)\(String(temp.lowercased().dropFirst()))"
+    }
+
+    func structSuffix() -> String {
+        var temp = self.split(separator: "_")
+        return temp.map{ "\($0)".capitaliz() }.joined(separator: "_")
     }
 }
 
@@ -53,11 +54,11 @@ struct Parameter {
                 var varIsOption = self.isOptional(for: varType)
                 let varIsArray = self.isArray(for: varType)
                 var varUnSupport = self.unSupport(for: varType)
-                if varIsArray {
-                    varType = "\(varName.dropFirst().dropLast())"
-                }
                 if varIsOption && varType.hasSuffix("?") {
                     varType = "\(varType.dropLast())"
+                }
+                if varIsArray {
+                    varType = "\(varType.dropFirst().dropLast())"
                 }
                 if varIsArray, !(type_dict[varType]?.inheritedTypes.contains("\(typeible)") ?? false) {
                     varUnSupport = true
@@ -78,7 +79,7 @@ struct Parameter {
     }
 
     static func isArray(for type: String) -> Bool {
-        return type.hasPrefix("[") && type.hasSuffix("]")
+        return type.hasPrefix("[") && (type.hasSuffix("]") || type.hasSuffix("]?"))
     }
 
     /// 回调函数 ()->
@@ -178,7 +179,7 @@ public enum Router {
         <%_ loopIndex = 0; 
         for router in routers {
             loopIndex += 1  -%>
-        Router.<%= router.name %>: <%= router.parameters.isEmpty ? "nil" : "Router.PR\(router.name.capitaliz()).self" %><%= loopIndex == routers.count ? "" : "," %>
+        Router.<%= router.name %>: <%= router.parameters.isEmpty ? "nil" : "Router.PR\(router.name.structSuffix()).self" %><%= loopIndex == routers.count ? "" : "," %>
         <%_ } -%>
         <%_ } -%>
     ]
@@ -189,7 +190,7 @@ public enum Router {
     /// view: <%= router.view %>
     /// path: <%= router.path %>
     /// name: <%= router.name %>
-    public struct PR<%= router.name.capitaliz() %>: <%= parameterible %> {
+    public struct PR<%= router.name.structSuffix() %>: <%= parameterible %> {
         <%_ for parameter in router.parameters { -%>
         var <%= parameter.name %>: <%= parameter.typeFormat %>
         <%_ } -%>
@@ -201,7 +202,7 @@ public enum Router {
             let sortedParameters = requiredList + optionalList
             loopIndex = 0
             for parameter in sortedParameters { -%>
-            <%= parameter.name %>: <%= parameter.typeFormat -%> <%= parameter.isOpt ? " = nil" : "" %> <%_ 
+            <%= parameter.name %>: <%= parameter.typeFormat -%><%= parameter.isOpt ? " = nil" : "" %> <%_ 
                 loopIndex += 1
                 if loopIndex < sortedParameters.count {
                     print(",")
@@ -215,13 +216,16 @@ public enum Router {
         }
 
         public static func instance(by queryItem: [String: String]) -> Self? {
+            <%_ if !(sortedParameters.filter{ !$0.unSupport }.isEmpty) { -%>
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
             let dict = [String: String](uniqueKeysWithValues: items)
+            <%_ } -%>
             <%_ for (i, parameter) in sortedParameters.enumerated() where parameter.unSupport == false  { 
                 let varName = i < requiredList.count ? "_\(parameter.name)" : "\(parameter.name)" -%>
             <%_# 构建默认参数 -%>
-            var <%= varName %>: <%= parameter.type %>? = <%= parameter.type == "String" ? "\"\(parameter.defaultValue ?? "")\"" : (parameter.defaultValue ?? "nil") %>
-            if let value = dict["<%= parameter.name.lowercased() %>"]{
+            var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = <%= parameter.type == "String" ? "\"\(parameter.defaultValue ?? "")\"" : (parameter.defaultValue ?? "nil") %>
+            <%_ if parameter.isArray && !(type_dict[parameter.type]?.inheritedTypes.contains("\(typeible)") ?? false)  { continue } -%>
+            if let value = dict["<%= parameter.name.lowercased() %>"] {
                 <%_# begin if type.kind == "enum" -%>
                 <%_ if let type = type_dict[parameter.type], type.kind == "enum" { -%>
                 <%_ if "\(type.value(forKey: "rawTypeName") ?? "")" == "String" { -%>
@@ -236,9 +240,9 @@ public enum Router {
                 <%_ } else if let type = type_dict[parameter.type], type.inheritedTypes.contains("\(typeible)") { -%>
                 <%_# // do: check parameter type is $typeible -%>
                 <%_ if parameter.isArray { -%>
-                    <%= varName %> = <%= parameter.type %>.list(from: value])
+                <%= varName %> = <%= parameter.type %>.list(from: value)
                 <%_ } else { -%>
-                    <%= varName %> = <%= parameter.type %>.instance(from: value])
+                <%= varName %> = <%= parameter.type %>.instance(from: value)
                 <%_}-%>
                 <%_ } else if parameter.type == "String" { -%>
                 <%_# // do: check parameter type is String -%>
@@ -250,13 +254,15 @@ public enum Router {
             }
             <%_} -%>
             <%_# // do: check required parameter -%>
-            guard 
+            <%_ if !requiredList.isEmpty { -%>
+            guard
             <%_ loopIndex = 0; for parameter in requiredList { loopIndex += 1 -%>
                 let <%= parameter.name %> = _<%= parameter.name %><%= loopIndex == requiredList.count ? "" : "," %>
             <%_ } -%>
-            else { return nil}
+            else { return nil }
             <%_# // return Self() -%>
-            return PR<%= router.name.capitaliz() %>(
+            <%_ } -%>
+            return PR<%= router.name.structSuffix() %>(
             <%_ loopIndex = 0; 
             for parameter in sortedParameters { 
             loopIndex += 1 -%>

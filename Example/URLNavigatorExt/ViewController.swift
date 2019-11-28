@@ -34,10 +34,10 @@ enum Test2Enum: Int {
 // sourcery: router: parameter="blk:(()->Void)?"
 class ViewController: UIViewController, Navigatorible {
     var navigator: NavigatorType!
-    var parameter: Router.PRHome_page?
+    var parameter: Router.PRHome_Page?
     required init(navigator: NavigatorType, parameterible: Parameterible?) {
         super.init(nibName: nil, bundle: nil)
-        self.parameter = parameterible as? Router.PRHome_page
+        self.parameter = parameterible as? Router.PRHome_Page
     }
 
     required init?(coder: NSCoder) {
