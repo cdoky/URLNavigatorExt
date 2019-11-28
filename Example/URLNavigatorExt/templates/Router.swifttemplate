@@ -222,8 +222,13 @@ public enum Router {
             <%_ } -%>
             <%_ for (i, parameter) in sortedParameters.enumerated() where parameter.unSupport == false  { 
                 let varName = i < requiredList.count ? "_\(parameter.name)" : "\(parameter.name)" -%>
+                
             <%_# 构建默认参数 -%>
-            var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = <%= parameter.type == "String" ? "\"\(parameter.defaultValue ?? "")\"" : (parameter.defaultValue ?? "nil") %>
+            <%_ if let value = parameter.defaultValue { -%>
+            var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = <%= parameter.type == "String" ? "\"\(value)\"" : value %>
+            <%_ } else { -%>
+            var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %>
+            <%_ } -%>
             <%_ if parameter.isArray && !(type_dict[parameter.type]?.inheritedTypes.contains("\(typeible)") ?? false)  { continue } -%>
             if let value = dict["<%= parameter.name.lowercased() %>"] {
                 <%_# begin if type.kind == "enum" -%>
