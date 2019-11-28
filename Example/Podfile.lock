@@ -1,0 +1,27 @@
+PODS:
+  - Sourcery (0.17.0)
+  - URLNavigator (2.3.0)
+  - URLNavigatorExt (0.1.0):
+    - URLNavigator
+
+DEPENDENCIES:
+  - Sourcery
+  - URLNavigatorExt (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Sourcery
+    - URLNavigator
+
+EXTERNAL SOURCES:
+  URLNavigatorExt:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Sourcery: 3ed61be7c8a1218fce349266139379dba477efe0
+  URLNavigator: 2593c0e2d293732ec5c44503cf54dceba1a68085
+  URLNavigatorExt: 5523bb9a30bc3ebc4debc38525a58aa307fb0dea
+
+PODFILE CHECKSUM: dcff14e6dfb3449b56bee7bd136d463a248f228e
+
+COCOAPODS: 1.8.4

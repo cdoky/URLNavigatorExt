@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A3D88CB238D03D30048D85F /* ViewController01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88CA238D03D30048D85F /* ViewController01.swift */; };
+		4A3D88CD238D040C0048D85F /* ViewController02.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88CC238D040C0048D85F /* ViewController02.swift */; };
+		4A3D88D4238D0A900048D85F /* Router.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88D1238D0A900048D85F /* Router.generated.swift */; };
+		4A3D88DC238D0AC10048D85F /* Router.swifttemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4A3D88D9238D0AC10048D85F /* Router.swifttemplate */; };
+		4A3D88DE238D15700048D85F /* RouterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88DD238D15700048D85F /* RouterExtension.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -28,9 +33,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E77AE1344E9337F0C25050 /* URLNavigatorExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = URLNavigatorExt.podspec; path = ../URLNavigatorExt.podspec; sourceTree = "<group>"; };
+		00E77AE1344E9337F0C25050 /* URLNavigatorExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = URLNavigatorExt.podspec; path = ../URLNavigatorExt.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		05A5EEE2331F062188FF2757 /* Pods-URLNavigatorExt_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLNavigatorExt_Example.release.xcconfig"; path = "Target Support Files/Pods-URLNavigatorExt_Example/Pods-URLNavigatorExt_Example.release.xcconfig"; sourceTree = "<group>"; };
 		233D763245C80134182BD023 /* Pods_URLNavigatorExt_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_URLNavigatorExt_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A3D88CA238D03D30048D85F /* ViewController01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController01.swift; sourceTree = "<group>"; };
+		4A3D88CC238D040C0048D85F /* ViewController02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController02.swift; sourceTree = "<group>"; };
+		4A3D88D1238D0A900048D85F /* Router.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.generated.swift; sourceTree = "<group>"; };
+		4A3D88D9238D0AC10048D85F /* Router.swifttemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Router.swifttemplate; sourceTree = "<group>"; };
+		4A3D88DD238D15700048D85F /* RouterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterExtension.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* URLNavigatorExt_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = URLNavigatorExt_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,9 +51,9 @@
 		607FACE51AFB9204008FA782 /* URLNavigatorExt_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = URLNavigatorExt_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		655E4397B018529B8924F62C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		655E4397B018529B8924F62C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		AF1B15A4297CAE860F6095C4 /* Pods-URLNavigatorExt_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLNavigatorExt_Example.debug.xcconfig"; path = "Target Support Files/Pods-URLNavigatorExt_Example/Pods-URLNavigatorExt_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		D7EDDBD61F7FFD975C5C9910 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D7EDDBD61F7FFD975C5C9910 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		E75D935A2FE1AD663BA00850 /* Pods_URLNavigatorExt_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_URLNavigatorExt_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB81DAC8C082B0DADAEA98EF /* Pods-URLNavigatorExt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLNavigatorExt_Tests.release.xcconfig"; path = "Target Support Files/Pods-URLNavigatorExt_Tests/Pods-URLNavigatorExt_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		ED5FA7A8172BEF0F92E2081D /* Pods-URLNavigatorExt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLNavigatorExt_Tests.debug.xcconfig"; path = "Target Support Files/Pods-URLNavigatorExt_Tests/Pods-URLNavigatorExt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +79,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A3D88CF238D0A900048D85F /* generated */ = {
+			isa = PBXGroup;
+			children = (
+				4A3D88D1238D0A900048D85F /* Router.generated.swift */,
+				4A3D88DD238D15700048D85F /* RouterExtension.swift */,
+			);
+			path = generated;
+			sourceTree = "<group>";
+		};
+		4A3D88D6238D0AC10048D85F /* templates */ = {
+			isa = PBXGroup;
+			children = (
+				4A3D88D9238D0AC10048D85F /* Router.swifttemplate */,
+			);
+			path = templates;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -93,12 +120,16 @@
 		607FACD21AFB9204008FA782 /* Example for URLNavigatorExt */ = {
 			isa = PBXGroup;
 			children = (
+				4A3D88D6238D0AC10048D85F /* templates */,
+				4A3D88CF238D0A900048D85F /* generated */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				4A3D88CA238D03D30048D85F /* ViewController01.swift */,
+				4A3D88CC238D040C0048D85F /* ViewController02.swift */,
 			);
 			name = "Example for URLNavigatorExt";
 			path = URLNavigatorExt;
@@ -156,7 +187,6 @@
 				ED5FA7A8172BEF0F92E2081D /* Pods-URLNavigatorExt_Tests.debug.xcconfig */,
 				EB81DAC8C082B0DADAEA98EF /* Pods-URLNavigatorExt_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -168,6 +198,7 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "URLNavigatorExt_Example" */;
 			buildPhases = (
 				C07543A746CE57508983301A /* [CP] Check Pods Manifest.lock */,
+				4A3D88CE238D05840048D85F /* Sourcery */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -227,6 +258,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -248,6 +280,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				4A3D88DC238D0AC10048D85F /* Router.swifttemplate in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +295,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4A3D88CE238D05840048D85F /* Sourcery */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Sourcery;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Sourcery/bin/sourcery\" --prune --sources \"${SRCROOT}/URLNavigatorExt\" --templates \"${SRCROOT}/URLNavigatorExt/templates\" --output \"${SRCROOT}/URLNavigatorExt/generated\"\n\n";
+		};
 		655EA01B42523418615CD1C3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,10 +342,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-URLNavigatorExt_Example/Pods-URLNavigatorExt_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/URLNavigator/URLNavigator.framework",
 				"${BUILT_PRODUCTS_DIR}/URLNavigatorExt/URLNavigatorExt.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URLNavigator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URLNavigatorExt.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,8 +384,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A3D88DE238D15700048D85F /* RouterExtension.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				4A3D88CB238D03D30048D85F /* ViewController01.swift in Sources */,
+				4A3D88CD238D040C0048D85F /* ViewController02.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				4A3D88D4238D0A900048D85F /* Router.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

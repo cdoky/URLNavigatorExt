@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import URLNavigator
+import URLNavigatorExt
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var navigator = Navigator()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        Router.registOuterUrl(jsonStr: Router.config, navigator: navigator)
         return true
     }
 

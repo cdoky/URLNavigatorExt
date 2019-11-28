@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/goo.gle@foxmail.com/URLNavigatorExt'
+  s.homepage         = 'https://github.com/philCc/URLNavigatorExt'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'goo.gle@foxmail.com' => 'goo.gle@foxmail.com' }
-  s.source           = { :git => 'https://github.com/goo.gle@foxmail.com/URLNavigatorExt.git', :tag => s.version.to_s }
+  s.author           = { 'phil' => 'goo.gle@foxmail.com' }
+  s.source           = { :git => 'https://github.com/philCc/URLNavigatorExt.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
@@ -38,5 +38,5 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+   s.dependency 'URLNavigator'
 end

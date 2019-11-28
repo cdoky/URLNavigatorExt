@@ -2,7 +2,8 @@ use_frameworks!
 
 target 'URLNavigatorExt_Example' do
   pod 'URLNavigatorExt', :path => '../'
-
+  pod 'Sourcery'
+  
   target 'URLNavigatorExt_Tests' do
     inherit! :search_paths
 
