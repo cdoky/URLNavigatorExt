@@ -9,7 +9,24 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+## Requirements
+
+## Installation
+
+URLNavigatorExt is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'URLNavigatorExt'
+pod 'Sourcery'
+```
+
 ## Usage
+- Build Phases
+```shell
+"${PODS_ROOT}/Sourcery/bin/sourcery" --prune --sources "${SRCROOT}/${PROJECT_NAME}" --templates "${SRCROOT}/${PROJECT_NAME}/templates" --output "${SRCROOT}/${PROJECT_NAME}/generated"
+```
+
 - AppDelegate.swift
 ```swift
 import URLNavigator
@@ -26,10 +43,10 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ```
 
 - Viewcontroller
-// sourcery: router: desc="这是页面描述"
-// sourcery: router: name="这是页面名字"
-// sourcery: router: path="这是页面的路径 eg: /mine/profile"
-// sourcery: router: parameter="参数名称:参数类型(自定义类型或数组，需要实现`Typeible`协议):默认值"
+    - // sourcery: router: desc="这是页面描述"
+    - // sourcery: router: name="这是页面名字"
+    - // sourcery: router: path="这是页面的路径 eg: /mine/profile"
+    - // sourcery: router: parameter="参数名称:参数类型(自定义类型或数组，需要实现`Typeible`协议):默认值"
 `注意：`ViewController 必须实现`Navigatorible`协议
 ```swift
 // sourcery: router: desc="第一个viewController"
@@ -171,22 +188,11 @@ class ViewController: UIViewController, Navigatorible {
 ```
 - Push
 ```swift
-let para = Router.PRHome_page()
+let para = Router.PRHome_page(type: .a, p6: .c, p7: 100)
 self.navigator.push(Router.home_page, context: para)
 
 // or
 self.navigator.push("\(Router.home_page)?type=a&type1=b&p7=1")
-```
-
-## Requirements
-
-## Installation
-
-URLNavigatorExt is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'URLNavigatorExt'
 ```
 
 ## Author

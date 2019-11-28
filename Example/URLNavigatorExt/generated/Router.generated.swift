@@ -1,7 +1,7 @@
 // Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
-// Create Time: 2019-11-28 11:23:08
+// Create Time: 2019-11-28 12:47:25
 import URLNavigatorExt
 import URLNavigator
 
@@ -72,14 +72,14 @@ public enum Router {
         var type: TestEnum
 
         init(
-            type: TestEnum,
-            p6: Test2Enum,
-            p7: Int64,
-            type1: TestEnum?,
-            p3: String?,
-            p4: String?,
-            p5: Test2Enum?,
-            blk: (()->Void)?
+            type: TestEnum ,
+            p6: Test2Enum ,
+            p7: Int64 ,
+            type1: TestEnum?  = nil,
+            p3: String?  = nil,
+            p4: String?  = nil,
+            p5: Test2Enum?  = nil,
+            blk: (()->Void)?  = nil
         ) {
             self.blk = blk
             self.p7 = p7
@@ -157,8 +157,8 @@ public enum Router {
         var uid: Int64
 
         init(
-            uid: Int64,
-            name: String
+            uid: Int64 ,
+            name: String 
         ) {
             self.name = name
             self.uid = uid

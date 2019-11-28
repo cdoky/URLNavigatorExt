@@ -311,7 +311,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Sourcery/bin/sourcery\" --prune --sources \"${SRCROOT}/URLNavigatorExt\" --templates \"${SRCROOT}/URLNavigatorExt/templates\" --output \"${SRCROOT}/URLNavigatorExt/generated\"\n\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Sourcery/bin/sourcery\" --prune --sources \"${SRCROOT}/${PROJECT_NAME}\" --templates \"${SRCROOT}/${PROJECT_NAME}/templates\" --output \"${SRCROOT}/${PROJECT_NAME}/generated\"\n\n";
 		};
 		655EA01B42523418615CD1C3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

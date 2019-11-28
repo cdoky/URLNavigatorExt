@@ -46,9 +46,6 @@ class ViewController: UIViewController, Navigatorible {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let para = Router.PRHome_page()
-        self.navigator.push(Router.home_page, context: para)
     }
 
     override func didReceiveMemoryWarning() {

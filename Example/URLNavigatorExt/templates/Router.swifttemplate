@@ -201,7 +201,7 @@ public enum Router {
             let sortedParameters = requiredList + optionalList
             loopIndex = 0
             for parameter in sortedParameters { -%>
-            <%= parameter.name %>: <%= parameter.typeFormat -%> <%_ 
+            <%= parameter.name %>: <%= parameter.typeFormat -%> <%= parameter.isOpt ? " = nil" : "" %> <%_ 
                 loopIndex += 1
                 if loopIndex < sortedParameters.count {
                     print(",")
