@@ -1,7 +1,4 @@
 <%_ 
-var importer = Set<String>()
-var paraTypeList = Set<String>()
-var paraTypes = [String: Type]()
 var loopIndex: Int = -1
 
 let routeible = "Navigatorible"

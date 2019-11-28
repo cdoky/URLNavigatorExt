@@ -34,9 +34,10 @@ enum Test2Enum: Int {
 // sourcery: router: parameter="blk:(()->Void)?"
 class ViewController: UIViewController, Navigatorible {
     var navigator: NavigatorType!
-
+    var parameter: Router.PRHome_page?
     required init(navigator: NavigatorType, parameterible: Parameterible?) {
         super.init(nibName: nil, bundle: nil)
+        self.parameter = parameterible as? Router.PRHome_page
     }
 
     required init?(coder: NSCoder) {
@@ -46,10 +47,8 @@ class ViewController: UIViewController, Navigatorible {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        let stack = UIStackView()
-//        for i in 0 ... 10 {
-//            let button = UIButton()
-//        }
+        let para = Router.PRHome_page()
+        self.navigator.push(Router.home_page, context: para)
     }
 
     override func didReceiveMemoryWarning() {

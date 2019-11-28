@@ -1,61 +1,21 @@
-# URLNavigatorExt
+// Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
+// DO NOT EDIT
 
-[![CI Status](https://img.shields.io/travis/goo.gle@foxmail.com/URLNavigatorExt.svg?style=flat)](https://travis-ci.org/goo.gle@foxmail.com/URLNavigatorExt)
-[![Version](https://img.shields.io/cocoapods/v/URLNavigatorExt.svg?style=flat)](https://cocoapods.org/pods/URLNavigatorExt)
-[![License](https://img.shields.io/cocoapods/l/URLNavigatorExt.svg?style=flat)](https://cocoapods.org/pods/URLNavigatorExt)
-[![Platform](https://img.shields.io/cocoapods/p/URLNavigatorExt.svg?style=flat)](https://cocoapods.org/pods/URLNavigatorExt)
-
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Usage
-- AppDelegate.swift
-```swift
-import URLNavigator
+// Create Time: 2019-11-28 11:23:08
 import URLNavigatorExt
+import URLNavigator
 
-let navigator = Navigator()
-
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // ....
-    Router.registOuterUrl(jsonStr: Router.config, navigator: navigator)
-    // ....
-    return true
-}
-```
-
-- Viewcontroller
-// sourcery: router: desc="这是页面描述"
-// sourcery: router: name="这是页面名字"
-// sourcery: router: path="这是页面的路径 eg: /mine/profile"
-// sourcery: router: parameter="参数名称:参数类型(自定义类型或数组，需要实现`Typeible`协议):默认值"
-`注意：`ViewController 必须实现`Navigatorible`协议
-```swift
-// sourcery: router: desc="第一个viewController"
-// sourcery: router: name="home_page"
-// sourcery: router: path="/home"
-// sourcery: router: parameter="type:TestEnum:.a"
-// sourcery: router: parameter="type1:TestEnum?:.b"
-// sourcery: router: parameter="p3:String?:abc123"
-// sourcery: router: parameter="p4:String?"
-// sourcery: router: parameter="p5:Test2Enum?:.c"
-// sourcery: router: parameter="p6:Test2Enum:.d"
-// sourcery: router: parameter="p7:Int64"
-// sourcery: router: parameter="blk:(()->Void)?"
-class ViewController: UIViewController, Navigatorible {
-    var navigator: NavigatorType!
-    var parameter: Router.PRHome_page?
-    required init(navigator: NavigatorType, parameterible: Parameterible?) {
-        super.init(nibName: nil, bundle: nil)
-        self.parameter = parameterible as? Router.PRHome_page
-    }
-
-    // ...
+struct ModelPageConfig {
+    let desc: String
+    let url: String
+    let page: URL
+    let priority: Int
 }
 
-/// output
-/*
+// swiftlint:disable file_length
+public enum Router {
+    static var urlPages = [String: ModelPageConfig]()
+
     /// desc: 第一个viewController
     /// view: ViewController
     /// parameters:
@@ -76,6 +36,26 @@ class ViewController: UIViewController, Navigatorible {
     ///         - a: a
     ///         - b: b
     public static let home_page = "\(Scheme.domain)/home"
+
+    /// desc: ViewController01
+    /// view: ViewController01
+    /// parameters:
+    ///     - None
+    public static let page01 = "\(Scheme.domain)/page01"
+
+    /// desc: ViewController02
+    /// view: ViewController02
+    /// parameters:
+    ///     - name: String default: 这是一个测试参数
+    ///     - uid: Int64 default: 0
+    public static let page02 = "\(Scheme.domain)/page02"
+
+    /// MARK: parameter type dic
+    static let urlParas: [String: Parameterible.Type?] = [
+        Router.home_page: Router.PRHome_page.self,
+        Router.page01: nil,
+        Router.page02: Router.PRPage02.self
+    ]
 
     /// desc: 第一个viewController
     /// view: ViewController
@@ -167,32 +147,68 @@ class ViewController: UIViewController, Navigatorible {
             )
         }
     }
-*/
-```
-- Push
-```swift
-let para = Router.PRHome_page()
-self.navigator.push(Router.home_page, context: para)
 
-// or
-self.navigator.push("\(Router.home_page)?type=a&type1=b&p7=1")
-```
+    /// desc: ViewController02
+    /// view: ViewController02
+    /// path: /page02
+    /// name: page02
+    public struct PRPage02: Parameterible {
+        var name: String
+        var uid: Int64
 
-## Requirements
+        init(
+            uid: Int64,
+            name: String
+        ) {
+            self.name = name
+            self.uid = uid
+        }
 
-## Installation
+        public static func instance(by queryItem: [String: String]) -> Self? {
+            let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
+            let dict = [String: String](uniqueKeysWithValues: items)
+            var _uid: Int64? = 0
+            if let value = dict["uid"]{
+                _uid = Int64(value)
+            }
+            var _name: String? = "这是一个测试参数"
+            if let value = dict["name"]{
+                _name = value
+            }
+            guard 
+                let uid = _uid,
+                let name = _name
+            else { return nil}
+            return PRPage02(
+                uid: uid,
+                name: name
+            )
+        }
+    }
 
-URLNavigatorExt is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
 
-```ruby
-pod 'URLNavigatorExt'
-```
-
-## Author
-
-goo.gle@foxmail.com
-
-## License
-
-URLNavigatorExt is available under the MIT license. See the LICENSE file for more info.
+    static let config = """
+        {
+            "router": [
+                {
+                    "desc": "第一个viewController",
+                    "path": "/home",
+                    "page": "ViewController",
+                    "priority": 1
+                },
+                {
+                    "desc": "ViewController01",
+                    "path": "/page01",
+                    "page": "ViewController01",
+                    "priority": 1
+                },
+                {
+                    "desc": "ViewController02",
+                    "path": "/page02",
+                    "page": "ViewController02",
+                    "priority": 1
+                }
+            ]
+        }  
+    """
+}
