@@ -1,7 +1,7 @@
 // Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
-// Create Time: 2019-11-28 16:10:26
+// Create Time: 2019-11-28 16:22:22
 import URLNavigatorExt
 import URLNavigator
 
@@ -94,36 +94,43 @@ public enum Router {
         public static func instance(by queryItem: [String: String]) -> Self? {
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
             let dict = [String: String](uniqueKeysWithValues: items)
+                
             var _type: TestEnum? = .a
             if let value = dict["type"] {
                 if let _enum = TestEnum(rawValue: value) {
                     _type = _enum
                 }
             }
+                
             var _p6: Test2Enum? = .d
             if let value = dict["p6"] {
                 if let _value = Int(value), let _enum = Test2Enum(rawValue: _value) {
                     _p6 = _enum
                 }
             }
-            var _p7: Int64? = nil
+                
+            var _p7: Int64?
             if let value = dict["p7"] {
                 _p7 = Int64(value)
             }
+                
             var type1: TestEnum? = .b
             if let value = dict["type1"] {
                 if let _enum = TestEnum(rawValue: value) {
                     type1 = _enum
                 }
             }
+                
             var p3: String? = "abc123"
             if let value = dict["p3"] {
                 p3 = value
             }
-            var p4: String? = ""
+                
+            var p4: String?
             if let value = dict["p4"] {
                 p4 = value
             }
+                
             var p5: Test2Enum? = .c
             if let value = dict["p5"] {
                 if let _value = Int(value), let _enum = Test2Enum(rawValue: _value) {
@@ -167,10 +174,12 @@ public enum Router {
         public static func instance(by queryItem: [String: String]) -> Self? {
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
             let dict = [String: String](uniqueKeysWithValues: items)
+                
             var _uid: Int64? = 0
             if let value = dict["uid"] {
                 _uid = Int64(value)
             }
+                
             var _name: String? = "这是一个测试参数"
             if let value = dict["name"] {
                 _name = value
