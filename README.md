@@ -112,11 +112,11 @@ class ViewController: UIViewController, Navigatorible {
             type: TestEnum,
             p6: Test2Enum,
             p7: Int64,
-            type1: TestEnum?,
-            p3: String?,
-            p4: String?,
-            p5: Test2Enum?,
-            blk: (()->Void)?
+            type1: TestEnum?  = nil,
+            p3: String?  = nil,
+            p4: String?  = nil,
+            p5: Test2Enum?  = nil,
+            blk: (()->Void)?  = nil
         ) {
             self.blk = blk
             self.p7 = p7
