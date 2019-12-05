@@ -9,7 +9,9 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+## Dependencies
+- [URLNavigator](https://github.com/devxoul/URLNavigator):Elegant URL Routing for Swift
+- [Sourcery](https://github.com/krzysztofzablocki/Sourcery):Meta-programming for Swift, stop writing boilerplate code. http://merowing.info
 
 ## Installation
 
