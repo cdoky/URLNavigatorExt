@@ -108,23 +108,23 @@ extension NavigatorType {
     }
 
     @discardableResult
-    public func present(_ url: URLConvertible, style presentationStyle: UIModalPresentationStyle = .fullScreen, context: Any? = nil, wrap: UINavigationController.Type? = nil, from: UIViewControllerType? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIViewController? {
+    public func present(_ url: URLConvertible, style presentationStyle: UIModalPresentationStyle, context: Any? = nil, wrap: UINavigationController.Type? = nil, from: UIViewControllerType? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIViewController? {
       return self.presentURL(url, style: presentationStyle, context: context, wrap: wrap, from: from, animated: animated, completion: completion)
     }
 
     @discardableResult
-    public func present(_ viewController: UIViewController, style presentationStyle: UIModalPresentationStyle = .fullScreen, wrap: UINavigationController.Type? = nil, from: UIViewControllerType? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIViewController? {
+    public func present(_ viewController: UIViewController, style presentationStyle: UIModalPresentationStyle, wrap: UINavigationController.Type? = nil, from: UIViewControllerType? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIViewController? {
       return self.presentViewController(viewController, style: presentationStyle, wrap: wrap, from: from, animated: animated, completion: completion)
     }
 
     @discardableResult
-    public func presentURL(_ url: URLConvertible, style presentationStyle: UIModalPresentationStyle = .fullScreen, context: Any? = nil, wrap: UINavigationController.Type? = nil, from: UIViewControllerType? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIViewController? {
+    public func presentURL(_ url: URLConvertible, style presentationStyle: UIModalPresentationStyle, context: Any? = nil, wrap: UINavigationController.Type? = nil, from: UIViewControllerType? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIViewController? {
         guard let viewController = self.viewController(for: url, context: context) else { return nil }
         return self.presentViewController(viewController, style: presentationStyle, wrap: wrap, from: from, animated: animated, completion: completion)
       }
 
       @discardableResult
-      public func presentViewController(_ viewController: UIViewController, style presentationStyle: UIModalPresentationStyle = .fullScreen, wrap: UINavigationController.Type?, from: UIViewControllerType?, animated: Bool, completion: (() -> Void)?) -> UIViewController? {
+      public func presentViewController(_ viewController: UIViewController, style presentationStyle: UIModalPresentationStyle, wrap: UINavigationController.Type?, from: UIViewControllerType?, animated: Bool, completion: (() -> Void)?) -> UIViewController? {
         guard let fromViewController = from ?? UIViewController.topMost else { return nil }
 
         let viewControllerToPresent: UIViewController
