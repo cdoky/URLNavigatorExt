@@ -226,7 +226,10 @@ public enum Router {
             <%_# 构建默认参数 -%>
             <%_ if let value = parameter.defaultValue { -%>
             var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = <%= parameter.type == "String" ? "\"\(value)\"" : value %>
-            <%_ } else { -%>
+            <%_ } else if parameter.type == "String" { -%>
+            <%_# // do: fixed: error: Segmentation fault: 11 -%>
+            let <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = dict["<%= parameter.name.lowercased() %>"]
+            <%_ continue; } else { -%>
             var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %>
             <%_ } -%>
             <%_ if parameter.isArray && !(type_dict[parameter.type]?.inheritedTypes.contains("\(typeible)") ?? false)  { continue } -%>
