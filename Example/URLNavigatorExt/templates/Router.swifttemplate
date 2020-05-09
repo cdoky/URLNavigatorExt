@@ -138,17 +138,10 @@ print("// Create Time:", dateFormatter.string(from: Date()))
 import URLNavigatorExt
 import URLNavigator
 
-struct ModelPageConfig {
-    let desc: String
-    let url: String
-    let page: URL
-    let priority: Int
-}
-
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 public enum Router {
-    static var urlPages = [String: ModelPageConfig]()
+    static var urlPages = [String: PageConfig]()
 
     <%_# generate path -%>
     <%_ for router in routers { -%>
@@ -288,8 +281,14 @@ public enum Router {
     }
 
     <%_ } -%>
+    struct PageConfig {
+        let desc: String
+        let url: String
+        let page: URL
+        let priority: Int
+    }
 
-    static let config = """
+    static let pageConfigs = """
         {
             "router": [
                 <%_ loopIndex = 0;

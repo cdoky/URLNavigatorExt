@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigator = Navigator()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Router.registOuterUrl(jsonStr: Router.config, navigator: navigator)
+        Router.registOuterUrl(jsonStr: Router.pageConfigs, navigator: navigator)
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.makeKeyAndVisible()
         window.backgroundColor = .white

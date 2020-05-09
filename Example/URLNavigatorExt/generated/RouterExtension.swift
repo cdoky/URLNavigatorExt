@@ -32,7 +32,7 @@ extension Router {
                 if let preConfig = self.urlPages[url], preConfig.priority >= priority && priority < 5 {
                     continue
                 }
-                let config = ModelPageConfig(desc: pairs["desc"] as? String ?? "", url: url, page: URL(string: "\(Scheme.name)://\(page)")!, priority: priority)
+                let config = Router.PageConfig(desc: pairs["desc"] as? String ?? "", url: url, page: URL(string: "\(Scheme.name)://\(page)")!, priority: priority)
 
                 let fullURL = Scheme.domain + url
                 self.urlPages[url] = config
