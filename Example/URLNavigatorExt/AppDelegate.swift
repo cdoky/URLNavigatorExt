@@ -18,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         Router.registOuterUrl(jsonStr: Router.config, navigator: navigator)
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.makeKeyAndVisible()
+        window.backgroundColor = .white
+
+        let userListViewController = UserListViewController(navigator: navigator)
+        window.rootViewController = UINavigationController(rootViewController: userListViewController)
+
+        self.window = window
         return true
     }
 

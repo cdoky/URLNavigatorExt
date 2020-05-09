@@ -1,9 +1,11 @@
-<%_ 
+<%_
 var loopIndex: Int = -1
 
 let routeible = "Navigatorible"
 let parameterible = "Parameterible"
 let typeible = "Typeible"
+// config your domain(eg: app://www.google.com)
+let domain = #"\(Scheme.domain)"#
 
 extension String {
     func capitaliz() -> String {
@@ -18,7 +20,7 @@ extension String {
 }
 
 /// 支持返回序列化的自定义参数类型
-var type_dict = types.all.reduce([String: Type]()) { dict, type -> [String: Type] in 
+var type_dict = types.all.reduce([String: Type]()) { dict, type -> [String: Type] in
     var dict = dict
     dict[type.name] = type
     return dict
@@ -45,12 +47,14 @@ struct Parameter {
     }
 
     static func decode(by parameter: Any) -> [Parameter] {
+        let defaultTypes = ["String", "Int", "Int32", "Int64",
+            "Int8", "Float", "Double", "Bool", "Boolean"]
         guard let queryItems = parameter as? NSArray else {
             if let query = parameter as? String {
                 let items = query.split(separator: ":")
                 if items.count < 2 { return [] }
-                let varName = String(items[0])
-                var varType = String(items[1])
+                let varName = String(items[0]).trimmingCharacters(in: .whitespacesAndNewlines)
+                var varType = String(items[1]).trimmingCharacters(in: .whitespacesAndNewlines)
                 var varIsOption = self.isOptional(for: varType)
                 let varIsArray = self.isArray(for: varType)
                 var varUnSupport = self.unSupport(for: varType)
@@ -61,6 +65,8 @@ struct Parameter {
                     varType = "\(varType.dropFirst().dropLast())"
                 }
                 if varIsArray, !(type_dict[varType]?.inheritedTypes.contains("\(typeible)") ?? false) {
+                    varUnSupport = true
+                } else if type_dict[varType]?.kind != "enum" && !defaultTypes.contains(varType) {
                     varUnSupport = true
                 }
                 if varUnSupport {
@@ -83,7 +89,7 @@ struct Parameter {
     }
 
     /// 回调函数 ()->
-    /// 查找 ^[^(|)|-|>|/]+$ 不能包含()->, 
+    /// 查找 ^[^(|)|-|>|/]+$ 不能包含()->,
     /// 如果数量为0，则为回调函数，不支持，否则不是回调函数类型，支持
     static func unSupport(for type: String) -> Bool {
         let checkReg = try! NSRegularExpression(pattern: #"^[^(|)|-|>|/]+$"#, options: NSRegularExpression.Options.caseInsensitive)
@@ -116,12 +122,12 @@ var routers = [Router]()
 
 /// 构建router
 for type in types.all where type.inheritedTypes.contains("\(routeible)") {
-        if let annotation = type.annotations["router"], 
-        annotation.value(forKey: "name") != nil, 
+        if let annotation = type.annotations["router"],
+        annotation.value(forKey: "name") != nil,
         annotation.value(forKey: "path") != nil {
         let router = Router.decode(by: annotation, view: type.name)
         routers.append(router)
-    } 
+    }
 }
 
 let dateFormatter = DateFormatter.init()
@@ -140,6 +146,7 @@ struct ModelPageConfig {
 }
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 public enum Router {
     static var urlPages = [String: ModelPageConfig]()
 
@@ -153,21 +160,21 @@ public enum Router {
     <%_ } else {
        for parameter in router.parameters { -%>
     ///     - <%= parameter.name %>: <%= parameter.typeFormat %> <%= parameter.defaultValue == nil ? "" : "default: \(parameter.defaultValue!)" %>
-        <%_ if let type = type_dict[parameter.type], 
+        <%_ if let type = type_dict[parameter.type],
             type.kind == "enum",
-            let cases = type.value(forKey: "cases") as? [EnumCase] { 
+            let cases = type.value(forKey: "cases") as? [EnumCase] {
             var rawValue: Int = 0
-            for _case in cases { 
+            for _case in cases {
                 rawValue = Int(_case.rawValue ?? "") ?? rawValue
                 -%>
     ///         - <%= _case.name %>: <%= _case.rawValue ?? "\(rawValue)" %>
-            <%_ 
+            <%_
             rawValue += 1
-            } 
+            }
          } -%>
-       <%_ } 
+       <%_ }
     }-%>
-    public static let <%= router.name %> = "\(Scheme.domain)<%= router.path %>"
+    public static let <%= router.name %> = "<%= domain %><%= router.path %>"
 
     <%_ } -%>
     <%_# generate parameter types -%>
@@ -176,7 +183,7 @@ public enum Router {
         <%_ if routers.isEmpty { -%>
             :
         <%_ } else { -%>
-        <%_ loopIndex = 0; 
+        <%_ loopIndex = 0;
         for router in routers {
             loopIndex += 1  -%>
         Router.<%= router.name %>: <%= router.parameters.isEmpty ? "nil" : "Router.PR\(router.name.structSuffix()).self" %><%= loopIndex == routers.count ? "" : "," %>
@@ -196,13 +203,13 @@ public enum Router {
         <%_ } -%>
 
         init(
-            <%_ 
+            <%_
             let requiredList = Array(router.parameters.filter{ !$0.isOpt }.reversed())
             let optionalList = Array(router.parameters.filter{ $0.isOpt }.reversed())
             let sortedParameters = requiredList + optionalList
             loopIndex = 0
             for parameter in sortedParameters { -%>
-            <%= parameter.name %>: <%= parameter.typeFormat -%><%= parameter.isOpt ? " = nil" : "" %> <%_ 
+            <%= parameter.name %>: <%= parameter.typeFormat -%><%= parameter.isOpt ? " = nil" : "" %> <%_
                 loopIndex += 1
                 if loopIndex < sortedParameters.count {
                     print(",")
@@ -220,9 +227,9 @@ public enum Router {
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
             let dict = [String: String](uniqueKeysWithValues: items)
             <%_ } -%>
-            <%_ for (i, parameter) in sortedParameters.enumerated() where parameter.unSupport == false  { 
+            <%_ for (i, parameter) in sortedParameters.enumerated() where parameter.unSupport == false  {
                 let varName = i < requiredList.count ? "_\(parameter.name)" : "\(parameter.name)" -%>
-                
+
             <%_# 构建默认参数 -%>
             <%_ if let value = parameter.defaultValue { -%>
             var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = <%= parameter.type == "String" ? "\"\(value)\"" : value %>
@@ -271,8 +278,8 @@ public enum Router {
             <%_# // return Self() -%>
             <%_ } -%>
             return PR<%= router.name.structSuffix() %>(
-            <%_ loopIndex = 0; 
-            for parameter in sortedParameters { 
+            <%_ loopIndex = 0;
+            for parameter in sortedParameters {
             loopIndex += 1 -%>
                 <%= parameter.name %>: <%= parameter.unSupport ? "nil" : parameter.name %><%= loopIndex == sortedParameters.count ? "" : "," %>
             <%_ } -%>
@@ -286,7 +293,7 @@ public enum Router {
         {
             "router": [
                 <%_ loopIndex = 0;
-                    for router in routers { 
+                    for router in routers {
                     loopIndex += 1 -%>
                 {
                     "desc": "<%= router.desc %>",
@@ -296,6 +303,6 @@ public enum Router {
                 }<%= loopIndex == routers.count ? "" : "," %>
                 <%_ }-%>
             ]
-        }  
+        }
     """
 }

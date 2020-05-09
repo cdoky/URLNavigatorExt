@@ -16,7 +16,7 @@ public class Scheme {
         return String(NSStringFromClass(Scheme.self).split(separator: ".").first!)
     }
 
-    static var domain = "http://exam.com"
+    static var domain = "navigator://www.app.com"
 }
 
 extension Router {
@@ -26,7 +26,7 @@ extension Router {
             else { return }
         for kv in router {
             if let pairs = kv as? [String: Any],
-                let url = pairs["url"] as? String,
+                let url = pairs["path"] as? String,
                 let page = pairs["page"] as? String {
                 let priority = pairs["priority"] as? Int ?? 1
                 if let preConfig = self.urlPages[url], preConfig.priority >= priority && priority < 5 {
@@ -74,9 +74,9 @@ extension Router {
             }
             guard let scheme = interUrl.scheme,
                 let host = interUrl.host else {
-                    print("\n//=============iOSCore=======================")
-                    print("|iOSCor: Error: schme and host can't be nil, pz check your scheme, 不能包含特殊符号|")
-                    print("//<<<<<<<<<<<<<<<iOSCore<<<<<<<<<<<<<<<<<<<<<<<<\n")
+                    print("\n//=============URLNavigatorExt=======================")
+                    print("|URLNavigatorExt: Error: schme and host can't be nil, pz check your scheme, 不能包含特殊符号|")
+                    print("//<<<<<<<<<<<<<<<URLNavigatorExt<<<<<<<<<<<<<<<<<<<<<<<<\n")
                     return nil
             }
 

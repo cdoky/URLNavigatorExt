@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A3D88CB238D03D30048D85F /* ViewController01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88CA238D03D30048D85F /* ViewController01.swift */; };
-		4A3D88CD238D040C0048D85F /* ViewController02.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88CC238D040C0048D85F /* ViewController02.swift */; };
 		4A3D88D4238D0A900048D85F /* Router.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88D1238D0A900048D85F /* Router.generated.swift */; };
-		4A3D88DC238D0AC10048D85F /* Router.swifttemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4A3D88D9238D0AC10048D85F /* Router.swifttemplate */; };
 		4A3D88DE238D15700048D85F /* RouterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D88DD238D15700048D85F /* RouterExtension.swift */; };
+		4A89CB52246658AF00CCEA9B /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB41246658AF00CCEA9B /* HTTP.swift */; };
+		4A89CB53246658AF00CCEA9B /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB42246658AF00CCEA9B /* GitHub.swift */; };
+		4A89CB54246658AF00CCEA9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB44246658AF00CCEA9B /* User.swift */; };
+		4A89CB55246658AF00CCEA9B /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB45246658AF00CCEA9B /* Repo.swift */; };
+		4A89CB59246658AF00CCEA9B /* RepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB4D246658AF00CCEA9B /* RepoCell.swift */; };
+		4A89CB5A246658AF00CCEA9B /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB4E246658AF00CCEA9B /* UserCell.swift */; };
+		4A89CB5B246658AF00CCEA9B /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB50246658AF00CCEA9B /* UserViewController.swift */; };
+		4A89CB5C246658AF00CCEA9B /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A89CB51246658AF00CCEA9B /* UserListViewController.swift */; };
+		4A89CB5D2466592C00CCEA9B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A89CB47246658AF00CCEA9B /* LaunchScreen.xib */; };
+		4A89CB5E2466592C00CCEA9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A89CB49246658AF00CCEA9B /* Main.storyboard */; };
+		4A89CB5F2466592C00CCEA9B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A89CB4B246658AF00CCEA9B /* Images.xcassets */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
-		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
-		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
-		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		888FE756EF6DCFFFA0277DB4 /* Pods_URLNavigatorExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75D935A2FE1AD663BA00850 /* Pods_URLNavigatorExt_Example.framework */; };
 		F37CB8411FAF8F21EF41E0C4 /* Pods_URLNavigatorExt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 233D763245C80134182BD023 /* Pods_URLNavigatorExt_Tests.framework */; };
@@ -36,18 +40,23 @@
 		00E77AE1344E9337F0C25050 /* URLNavigatorExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = URLNavigatorExt.podspec; path = ../URLNavigatorExt.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		05A5EEE2331F062188FF2757 /* Pods-URLNavigatorExt_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLNavigatorExt_Example.release.xcconfig"; path = "Target Support Files/Pods-URLNavigatorExt_Example/Pods-URLNavigatorExt_Example.release.xcconfig"; sourceTree = "<group>"; };
 		233D763245C80134182BD023 /* Pods_URLNavigatorExt_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_URLNavigatorExt_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A3D88CA238D03D30048D85F /* ViewController01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController01.swift; sourceTree = "<group>"; };
-		4A3D88CC238D040C0048D85F /* ViewController02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController02.swift; sourceTree = "<group>"; };
 		4A3D88D1238D0A900048D85F /* Router.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.generated.swift; sourceTree = "<group>"; };
 		4A3D88D9238D0AC10048D85F /* Router.swifttemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Router.swifttemplate; sourceTree = "<group>"; };
 		4A3D88DD238D15700048D85F /* RouterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterExtension.swift; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* URLNavigatorExt_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = URLNavigatorExt_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A89CB41246658AF00CCEA9B /* HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
+		4A89CB42246658AF00CCEA9B /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		4A89CB44246658AF00CCEA9B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4A89CB45246658AF00CCEA9B /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
+		4A89CB48246658AF00CCEA9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		4A89CB4A246658AF00CCEA9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4A89CB4B246658AF00CCEA9B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4A89CB4D246658AF00CCEA9B /* RepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoCell.swift; sourceTree = "<group>"; };
+		4A89CB4E246658AF00CCEA9B /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		4A89CB50246658AF00CCEA9B /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		4A89CB51246658AF00CCEA9B /* UserListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* URLNavigatorExtExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = URLNavigatorExtExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* URLNavigatorExt_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = URLNavigatorExt_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
@@ -96,6 +105,52 @@
 			path = templates;
 			sourceTree = "<group>";
 		};
+		4A89CB40246658AF00CCEA9B /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4A89CB41246658AF00CCEA9B /* HTTP.swift */,
+				4A89CB42246658AF00CCEA9B /* GitHub.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		4A89CB43246658AF00CCEA9B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4A89CB44246658AF00CCEA9B /* User.swift */,
+				4A89CB45246658AF00CCEA9B /* Repo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4A89CB46246658AF00CCEA9B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4A89CB47246658AF00CCEA9B /* LaunchScreen.xib */,
+				4A89CB49246658AF00CCEA9B /* Main.storyboard */,
+				4A89CB4B246658AF00CCEA9B /* Images.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4A89CB4C246658AF00CCEA9B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A89CB4D246658AF00CCEA9B /* RepoCell.swift */,
+				4A89CB4E246658AF00CCEA9B /* UserCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4A89CB4F246658AF00CCEA9B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4A89CB50246658AF00CCEA9B /* UserViewController.swift */,
+				4A89CB51246658AF00CCEA9B /* UserListViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -111,7 +166,7 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* URLNavigatorExt_Example.app */,
+				607FACD01AFB9204008FA782 /* URLNavigatorExtExample.app */,
 				607FACE51AFB9204008FA782 /* URLNavigatorExt_Tests.xctest */,
 			);
 			name = Products;
@@ -120,16 +175,15 @@
 		607FACD21AFB9204008FA782 /* Example for URLNavigatorExt */ = {
 			isa = PBXGroup;
 			children = (
+				4A89CB43246658AF00CCEA9B /* Models */,
+				4A89CB40246658AF00CCEA9B /* Networking */,
+				4A89CB46246658AF00CCEA9B /* Resources */,
+				4A89CB4F246658AF00CCEA9B /* ViewControllers */,
+				4A89CB4C246658AF00CCEA9B /* Views */,
 				4A3D88D6238D0AC10048D85F /* templates */,
 				4A3D88CF238D0A900048D85F /* generated */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
-				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				4A3D88CA238D03D30048D85F /* ViewController01.swift */,
-				4A3D88CC238D040C0048D85F /* ViewController02.swift */,
 			);
 			name = "Example for URLNavigatorExt";
 			path = URLNavigatorExt;
@@ -193,9 +247,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* URLNavigatorExt_Example */ = {
+		607FACCF1AFB9204008FA782 /* URLNavigatorExtExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "URLNavigatorExt_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "URLNavigatorExtExample" */;
 			buildPhases = (
 				C07543A746CE57508983301A /* [CP] Check Pods Manifest.lock */,
 				4A3D88CE238D05840048D85F /* Sourcery */,
@@ -208,9 +262,9 @@
 			);
 			dependencies = (
 			);
-			name = URLNavigatorExt_Example;
+			name = URLNavigatorExtExample;
 			productName = URLNavigatorExt;
-			productReference = 607FACD01AFB9204008FA782 /* URLNavigatorExt_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* URLNavigatorExtExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 		607FACE41AFB9204008FA782 /* URLNavigatorExt_Tests */ = {
@@ -267,7 +321,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* URLNavigatorExt_Example */,
+				607FACCF1AFB9204008FA782 /* URLNavigatorExtExample */,
 				607FACE41AFB9204008FA782 /* URLNavigatorExt_Tests */,
 			);
 		};
@@ -278,10 +332,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				4A3D88DC238D0AC10048D85F /* Router.swifttemplate in Resources */,
-				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				4A89CB5D2466592C00CCEA9B /* LaunchScreen.xib in Resources */,
+				4A89CB5E2466592C00CCEA9B /* Main.storyboard in Resources */,
+				4A89CB5F2466592C00CCEA9B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,12 +437,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A89CB55246658AF00CCEA9B /* Repo.swift in Sources */,
+				4A89CB5C246658AF00CCEA9B /* UserListViewController.swift in Sources */,
+				4A89CB5B246658AF00CCEA9B /* UserViewController.swift in Sources */,
+				4A89CB53246658AF00CCEA9B /* GitHub.swift in Sources */,
 				4A3D88DE238D15700048D85F /* RouterExtension.swift in Sources */,
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				4A3D88CB238D03D30048D85F /* ViewController01.swift in Sources */,
-				4A3D88CD238D040C0048D85F /* ViewController02.swift in Sources */,
+				4A89CB54246658AF00CCEA9B /* User.swift in Sources */,
+				4A89CB52246658AF00CCEA9B /* HTTP.swift in Sources */,
+				4A89CB5A246658AF00CCEA9B /* UserCell.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				4A3D88D4238D0A900048D85F /* Router.generated.swift in Sources */,
+				4A89CB59246658AF00CCEA9B /* RepoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,26 +464,26 @@
 /* Begin PBXTargetDependency section */
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* URLNavigatorExt_Example */;
+			target = 607FACCF1AFB9204008FA782 /* URLNavigatorExtExample */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
+		4A89CB47246658AF00CCEA9B /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				607FACDA1AFB9204008FA782 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDF1AFB9204008FA782 /* Base */,
+				4A89CB48246658AF00CCEA9B /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		4A89CB49246658AF00CCEA9B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A89CB4A246658AF00CCEA9B /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -612,7 +670,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "URLNavigatorExt_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "URLNavigatorExtExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
