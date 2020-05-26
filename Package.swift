@@ -25,8 +25,5 @@ let package = Package(
             name: "URLNavigatorExt",
             dependencies: [],
             path: "./URLNavigatorExt"),
-        .testTarget(
-            name: "URLNavigatorExtTests",
-            dependencies: ["URLNavigatorExt"]),
     ]
 )
