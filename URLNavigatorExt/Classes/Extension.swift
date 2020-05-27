@@ -1,4 +1,6 @@
 import URLNavigator
+import Foundation
+import UIKit
 
 extension Navigator {
     /// Description
