@@ -20,13 +20,23 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'URLNavigatorExt'
-pod 'Sourcery'
 ```
 
 ## Usage
+- install `sourcery`
+  > `brew install sourcery`
+- touch `.sourcery.yml` in ${SRCROOT} [sourcery document](https://cdn.rawgit.com/krzysztofzablocki/Sourcery/master/docs/usage.html)
+  > 
+  ```yml
+     sources:
+         - ./${PROJECT_NAME}
+     templates:
+         - ./${PROJECT_NAME}/config
+     output:
+         ./${PROJECT_NAME}/config
 - Build Phases
 ```shell
-"${PODS_ROOT}/Sourcery/bin/sourcery" --prune --sources "${SRCROOT}/${PROJECT_NAME}" --templates "${SRCROOT}/${PROJECT_NAME}/templates" --output "${SRCROOT}/${PROJECT_NAME}/generated"
+sourcery
 ```
 
 - AppDelegate.swift
