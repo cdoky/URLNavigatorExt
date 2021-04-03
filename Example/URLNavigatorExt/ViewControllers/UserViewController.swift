@@ -15,7 +15,7 @@ import URLNavigatorExt
 // sourcery: router: path="user/detail"
 // sourcery: router: parameter="name:String"
 final class UserViewController: UIViewController, Navigatorible {
-    var navigator: NavigatorType
+    var navigator: NavigatorType!
     private var parameter: Router.PRUser_Detail?
     init(navigator: NavigatorType, parameterible: Parameterible?) {
         self.navigator = navigator
