@@ -10,7 +10,7 @@ import URLNavigator
 /// Navigatorible
 public protocol Navigatorible {
     /// 导航器，如果是使用navigator.push跳转的页面，则不需要手动赋值，否则需要手动赋值
-    var navigator: NavigatorType! { get set }
+    var navigator: NavigatorType { get set }
     /// 初始化协议
     ///
     /// - Parameters:

@@ -1,7 +1,6 @@
-// Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 1.3.4 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
-
-// Create Time: 2020-05-09 14:15:04
+// Create Time: 2021-04-03 10:59:22
 import URLNavigatorExt
 import URLNavigator
 
