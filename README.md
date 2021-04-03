@@ -7,7 +7,7 @@
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+To run the example project, clone the repo, and run `pod install && sourcery` from the Example directory first.
 
 ## Dependencies
 - [URLNavigator](https://github.com/devxoul/URLNavigator):Elegant URL Routing for Swift
@@ -59,6 +59,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     - // sourcery: router: name="这是页面名字"
     - // sourcery: router: path="这是页面的路径 eg: /mine/profile"
     - // sourcery: router: parameter="参数名称:参数类型(自定义类型或数组，需要实现`Typeible`协议):默认值"
+
 `注意：`ViewController 必须实现`Navigatorible`协议
 ```swift
 // sourcery: router: desc="第一个viewController"
@@ -73,13 +74,13 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 // sourcery: router: parameter="p7:Int64"
 // sourcery: router: parameter="blk:(()->Void)?"
 class ViewController: UIViewController, Navigatorible {
-    var navigator: NavigatorType!
+    var navigator: NavigatorType
     var parameter: Router.PRHome_page?
     required init(navigator: NavigatorType, parameterible: Parameterible?) {
+        self.navigator = navigator
         super.init(nibName: nil, bundle: nil)
         self.parameter = parameterible as? Router.PRHome_page
     }
-
     // ...
 }
 
