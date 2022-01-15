@@ -6,6 +6,7 @@ let parameterible = "Parameterible"
 let typeible = "Typeible"
 // config your domain(eg: app://www.google.com)
 let domain = #"\(Scheme.domain)"#
+// let domain = #"app://www.google.com"#
 
 extension String {
     func capitaliz() -> String {
@@ -103,17 +104,19 @@ struct Router {
     let name: String
     let path: String
     let view: String
+    let module: String
     let parameters: [Parameter]
 
     static func decode(by annotation: NSObject, view: String) -> Router {
         let desc = annotation.value(forKey: "desc") as? String ?? ""
         let name = annotation.value(forKey: "name") as? String ?? "unknow"
         var path = annotation.value(forKey: "path") as? String ?? "unknow"
+        var module = annotation.value(forKey: "module") as? String ?? "native"
         if !path.hasPrefix("/") {
             path = "/\(path)"
         }
         let parameter = annotation.value(forKey: "parameter") ?? nil
-        return Router(desc: desc, name: name, path: path, view: view, parameters: parameter == nil ? [] : Parameter.decode(by: parameter))
+        return Router(desc: desc, name: name, path: path, view: view, module: module, parameters: parameter == nil ? [] : Parameter.decode(by: parameter))
     }
 }
 
@@ -194,6 +197,7 @@ public enum Router {
         <%_ for parameter in router.parameters { -%>
         var <%= parameter.name %>: <%= parameter.typeFormat %>
         <%_ } -%>
+        public fileprivate (set) var queries: [String : String] = [:]
 
         init(
             <%_
@@ -212,7 +216,34 @@ public enum Router {
         ) {
             <%_ for parameter in router.parameters { -%>
             self.<%= parameter.name %> = <%= parameter.name %>
+            <%_# 构建必选参数 -%>
+                <%_ if ["Int", "Int8", "Int32", "Int16", "Int64", "Double", "Float", "String"].contains(parameter.typeFormat) { -%>
+            self.queries["<%= parameter.name %>"] = String(describing: <%= parameter.name %>)
                 <%_ } -%>
+                <%_# end if -%>
+            <%_# 构建可选参数 -%>
+                <%_ if ["Int", "Int8", "Int32", "Int16", "Int64", "Double", "Float", "String"].map{ $0 + "?"}.contains(parameter.typeFormat) { -%>
+            if let v = <%= parameter.name %> {
+                self.queries["<%= parameter.name %>"] = String(describing: v)
+            }
+                <%_ } -%>
+                <%_# end if -%>
+            <%_# 构建枚举参数 -%>
+                <%_ if let type = type_dict[parameter.type], type.kind == "enum" { -%>
+                    <%_# 枚举参数必须是String或Int类型 -%>
+                    <%_ if let rawTypeName = type.value(forKey: "rawTypeName"), ("\(rawTypeName)" == "String" || "\(rawTypeName)" == "Int") { -%>
+                        <%_ if parameter.isOpt {-%>
+            if let v = <%= parameter.name %> {
+                self.queries["<%= parameter.name %>"] = String(describing: v.rawValue)
+            }
+                        <%_ } else { -%>
+            self.queries["<%= parameter.name %>"] = String(describing: <%= parameter.name %>.rawValue)
+                        <%_ } -%>
+                    <%_ } -%>
+                <%_ } -%>
+                <%_# end if -%>
+            <%_ } -%>
+            <%_# end for -%>
         }
 
         public static func instance(by queryItem: [String: String]) -> Self? {
@@ -292,13 +323,30 @@ public enum Router {
         {
             "router": [
                 <%_ loopIndex = 0;
-                    for router in routers {
+                    for router in routers where router.module == "native" {
                     loopIndex += 1 -%>
                 {
                     "desc": "<%= router.desc %>",
                     "path": "<%= router.path %>",
                     "page": "<%= router.view %>",
                     "priority": 1
+                }<%= loopIndex == routers.count ? "" : "," %>
+                <%_ }-%>
+            ]
+        }
+    """
+
+    static let flutterRouters = """
+        {
+            "router": [
+                <%_ loopIndex = 0;
+                    for router in routers where router.module == "flutter" {
+                    loopIndex += 1 -%>
+                {
+                    "desc": "<%= router.desc %>",
+                    "path": "<%= router.path %>",
+                    "page": "<%= router.view %>",
+                    "priority": 2
                 }<%= loopIndex == routers.count ? "" : "," %>
                 <%_ }-%>
             ]
