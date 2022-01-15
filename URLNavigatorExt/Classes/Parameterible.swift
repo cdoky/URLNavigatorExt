@@ -8,6 +8,7 @@
 /// 页面参数
 public protocol Parameterible {
     static func instance(by queryItem: [String: String]) -> Self?
+    var queries: [String: String] { get }
 }
 
 /// 页面参数复杂类型
@@ -18,6 +19,9 @@ public protocol Typeible {
 
 /// 默认参数类型
 public struct DefaultParameter: Parameterible {
+    public var queries: [String : String] {
+        return self.items
+    }
     public static func instance(by queryItem: [String : String]) -> DefaultParameter? {
         let ins = DefaultParameter(items: queryItem)
         return ins
