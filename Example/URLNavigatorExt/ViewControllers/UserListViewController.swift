@@ -102,7 +102,7 @@ extension UserListViewController: UITableViewDelegate {
         }
     }
     let openWithExt = UIAlertAction(title: "open by ext", style: .destructive) { (_) in
-        let para = Router.PRUser_Detail(name: user.name)
+        let para = Router.PRUser_Detail(name: user.name, sex: .unknow)
         let isPushed = self.navigator.push(Router.user_detail, context: para) != nil
         if isPushed {
           print("[Navigator] push: \(user.urlString)")

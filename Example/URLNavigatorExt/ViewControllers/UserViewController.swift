@@ -10,10 +10,18 @@ import UIKit
 import URLNavigator
 import URLNavigatorExt
 
+enum Sex: Int {
+    case unknow = 0
+    case male = 1
+    case famale = 2
+}
+
 // sourcery: router: desc="user detail page"
 // sourcery: router: name="user_detail"
 // sourcery: router: path="user/detail"
+// sourcery: router: parameter="code:Int?"
 // sourcery: router: parameter="name:String"
+// sourcery: router: parameter="sex:Sex?"
 final class UserViewController: UIViewController, Navigatorible {
     var navigator: NavigatorType!
     private var parameter: Router.PRUser_Detail?

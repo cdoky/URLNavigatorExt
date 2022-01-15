@@ -1,6 +1,6 @@
-// Generated using Sourcery 1.3.4 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 1.6.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
-// Create Time: 2021-04-03 10:59:22
+// Create Time: 2022-01-15 17:01:01
 import URLNavigatorExt
 import URLNavigator
 
@@ -12,7 +12,12 @@ public enum Router {
     /// desc: user detail page
     /// view: UserViewController
     /// parameters:
+    ///     - sex: Sex? 
+    ///         - unknow: 0
+    ///         - male: 1
+    ///         - famale: 2
     ///     - name: String 
+    ///     - code: Int? 
     public static let user_detail = "\(Scheme.domain)/user/detail"
 
     /// MARK: parameter type dic
@@ -25,12 +30,26 @@ public enum Router {
     /// path: /user/detail
     /// name: user_detail
     public struct PRUser_Detail: Parameterible {
+        var sex: Sex?
         var name: String
+        var code: Int?
+        public fileprivate (set) var queries: [String : String] = [:]
 
         init(
-            name: String
+            name: String,
+            code: Int? = nil,
+            sex: Sex? = nil
         ) {
+            self.sex = sex
+            if let v = sex {
+                self.queries["sex"] = String(describing: v.rawValue)
+            }
             self.name = name
+            self.queries["name"] = String(describing: name)
+            self.code = code
+            if let v = code {
+                self.queries["code"] = String(describing: v)
+            }
         }
 
         public static func instance(by queryItem: [String: String]) -> Self? {
@@ -38,11 +57,25 @@ public enum Router {
             let dict = [String: String](uniqueKeysWithValues: items)
 
             let _name: String? = dict["name"]
+
+            var code: Int?
+            if let value = dict["code"] {
+                code = Int(value)
+            }
+
+            var sex: Sex?
+            if let value = dict["sex"] {
+                if let _value = Int(value), let _enum = Sex(rawValue: _value) {
+                    sex = _enum
+                }
+            }
             guard
                 let name = _name
             else { return nil }
             return PRUser_Detail(
-                name: name
+                name: name,
+                code: code,
+                sex: sex
             )
         }
     }
@@ -63,6 +96,13 @@ public enum Router {
                     "page": "UserViewController",
                     "priority": 1
                 }
+            ]
+        }
+    """
+
+    static let flutterRouters = """
+        {
+            "router": [
             ]
         }
     """
