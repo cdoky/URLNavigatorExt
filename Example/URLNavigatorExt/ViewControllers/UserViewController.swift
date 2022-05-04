@@ -23,10 +23,8 @@ enum Sex: Int {
 // sourcery: router: parameter="name:String"
 // sourcery: router: parameter="sex:Sex?"
 final class UserViewController: UIViewController, Navigatorible {
-    var navigator: NavigatorType!
     private var parameter: Router.PRUser_Detail?
-    init(navigator: NavigatorType, parameterible: Parameterible?) {
-        self.navigator = navigator
+    init(parameterible: Parameterible?) {
         super.init(nibName: nil, bundle: nil)
         self.parameter = parameterible as? Router.PRUser_Detail
     }
@@ -43,8 +41,7 @@ final class UserViewController: UIViewController, Navigatorible {
 
   // MARK: Initializing
 
-  init(navigator: NavigatorType, username: String) {
-    self.navigator = navigator
+  init(username: String) {
     super.init(nibName: nil, bundle: nil)
     self.title = "\(username)'s Repositories"
   }
@@ -128,7 +125,7 @@ extension UserViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: false)
     let repo = self.repos[indexPath.row]
-    let webViewController = self.navigator.present(repo.urlString, wrap: nil)
+    let webViewController = navigator.present(repo.urlString, wrap: nil)
     webViewController?.title = "\(self.parameter?.name ?? "")/\(repo.name)"
     print("[Navigator] push: \(repo.urlString)")
   }

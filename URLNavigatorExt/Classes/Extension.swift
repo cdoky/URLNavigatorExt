@@ -1,17 +1,22 @@
-import URLNavigator
 import Foundation
 import UIKit
+import URLNavigator
 
-extension Navigator {
+public extension Navigator {
     /// Description
     ///
     /// - Parameters:
     ///   - navigator: navigator
     ///   - routers: key: namespace://host/path
-    public static func register(_ navigator: NavigatorType, routers: [String: Parameterible.Type?]) {
-        for (url, param) in routers {
-            // 只能通过push, present,
-            navigator.register(url, self.ViewControllerFactory(navigator: navigator, parameterible: param))
+    static func register(
+        _ navigator: NavigatorType,
+        routers: [String: Parameterible.Type?])
+    {
+        routers.forEach { url, param in
+            navigator.register(
+                url,
+                ViewControllerFactory(
+                    parameterible: param))
         }
     }
 
@@ -21,25 +26,28 @@ extension Navigator {
     ///   - navigator: navigator
     ///   - parameterible: parameterible type
     /// - Returns: ViewControllerFactory
-    private static func ViewControllerFactory(navigator: NavigatorType, parameterible: Parameterible.Type?) ->ViewControllerFactory {
-        return { url, values, context in
+    private static func ViewControllerFactory(
+        parameterible: Parameterible.Type?) -> ViewControllerFactory
+    {
+        return { url, _, context in
             guard let url = url.urlValue else { return nil }
             guard let scheme = url.scheme,
-                let host = url.host else {
-                    print("\n//====================================")
-                    print("|Error: schme and host can't be nil, check your scheme, cannot contain special symbols|")
-                    print("|eg: iosapp://yourhost/page/a?p1=1&p2=2|")
-                    print("//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n")
-                    return nil
+                  let host = url.host
+            else {
+                print("\n//====================================")
+                print("|Error: schme and host can't be nil, check your scheme, cannot contain special symbols|")
+                print("|eg: iosapp://yourhost/page/a?p1=1&p2=2|")
+                print("//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n")
+                return nil
             }
-            var parameter: Parameterible? = nil;
+            var parameter: Parameterible?
             if url.queryParameters.count != 0 {
                 parameter = (parameterible ?? DefaultParameter.self).instance(by: url.queryParameters)
             } else {
                 parameter = context as? Parameterible
             }
 
-            let controller = instance("\(scheme).\(host)", navigator: navigator, parameter: parameter)
+            let controller = instance("\(scheme).\(host)", parameter: parameter)
             return controller
         }
     }
@@ -51,15 +59,14 @@ extension Navigator {
     ///   - navigator: navigator实例
     ///   - parameter: 参数
     /// - Returns: UIViewController
-    public class func instance(_ fullPath: String,
-                  navigator: NavigatorType!,
-                  parameter: Parameterible?) -> UIViewController? {
+    class func instance(
+        _ fullPath: String,
+        parameter: Parameterible?) -> UIViewController?
+    {
         guard let clazz = NSClassFromString("\(fullPath)") as? Navigatorible.Type else {
-            return nil;
+            return nil
         }
-        var viewController = clazz.init(navigator: navigator, parameterible: parameter)
-        viewController.navigator = navigator
-        return viewController as? UIViewController
+        return clazz.init(parameterible: parameter) as? UIViewController
     }
 
     /// return Parameterible instance
@@ -68,25 +75,28 @@ extension Navigator {
     ///   - classStr: 参数类型全路径
     ///   - queryItem: 参数字典
     /// - Returns: 参数对象实例
-    public class func instance(_ classStr: String, queryItem: [String: String]) -> Parameterible? {
+    class func instance(_ classStr: String, queryItem: [String: String]) -> Parameterible? {
         guard let clazz = NSClassFromString("\(classStr)") as? Parameterible.Type else {
-            return nil;
+            return nil
         }
-        return clazz.instance(by: queryItem);
+        return clazz.instance(by: queryItem)
     }
-
 }
 
 // MARK: - 扩展NavigatorType
-extension NavigatorType {
+
+public extension NavigatorType {
+    var topMostNavigation: UINavigationController? {
+        UIViewController.topMost?.navigationController
+    }
 
     /// pop
     ///
     /// - Parameter animated: default is true
     /// - Returns: Returns the popped controller.
     @discardableResult
-    public func pop(animated: Bool = true) -> UIViewController? {
-        return UIViewController.topMost?.navigationController?.popViewController(animated: animated)
+    func pop(animated: Bool = true) -> UIViewController? {
+        return topMostNavigation?.popViewController(animated: animated)
     }
 
     /// popToRoot
@@ -94,8 +104,8 @@ extension NavigatorType {
     /// - Parameter animated: default is true
     /// - Returns: Returns the popped controller.
     @discardableResult
-    public func popToRoot(animated: Bool = true) -> [UIViewController]? {
-        return UIViewController.topMost?.navigationController?.popToRootViewController(animated: animated)
+    func popToRoot(animated: Bool = true) -> [UIViewController]? {
+        return topMostNavigation?.popToRootViewController(animated: animated)
     }
 
     /// popToViewController
@@ -104,8 +114,10 @@ extension NavigatorType {
     ///   - animated: default is true
     /// - Returns: Returns the popped controller.
     @discardableResult
-    public func popToViewController(_ viewController: UIViewController,
-                                    animated: Bool = true) -> [UIViewController]? {
-        return UIViewController.topMost?.navigationController?.popToViewController(viewController, animated: animated)
+    func popToViewController(
+        _ viewController: UIViewController,
+        animated: Bool = true) -> [UIViewController]?
+    {
+        return topMostNavigation?.popToViewController(viewController, animated: animated)
     }
 }

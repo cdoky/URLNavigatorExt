@@ -98,7 +98,7 @@ extension Router {
                 parameter = context as? Parameterible
             }
 
-            let controller = Navigator.instance("\(scheme).\(host)", navigator: navigator, parameter: parameter)
+            let controller = Navigator.instance("\(scheme).\(host)", parameter: parameter)
             return controller
         }
     }
