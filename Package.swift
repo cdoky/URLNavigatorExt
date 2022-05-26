@@ -20,7 +20,7 @@ let package = Package(
         .target(
             name: "URLNavigatorExt",
             dependencies: ["URLNavigator"],
-            path: "URLNavigatorExt/Classes"
+            path: "Sources/Classes"
         ),
     ]
 )
