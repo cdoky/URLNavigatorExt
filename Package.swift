@@ -19,6 +19,8 @@ let package = Package(
     targets: [
         .target(
             name: "URLNavigatorExt",
-            dependencies: ["URLNavigator"]),
+            dependencies: ["URLNavigator"],
+            path: "URLNavigatorExt/Classes"
+        ),
     ]
 )
