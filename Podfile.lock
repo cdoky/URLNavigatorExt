@@ -1,10 +1,10 @@
 PODS:
   - URLNavigator (2.3.0)
-  - URLNavigatorExt (1.0.2):
+  - URLNavigatorExt (2.1.0):
     - URLNavigator
 
 DEPENDENCIES:
-  - URLNavigatorExt (from `../`)
+  - URLNavigatorExt (from `./`)
 
 SPEC REPOS:
   trunk:
@@ -12,12 +12,12 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   URLNavigatorExt:
-    :path: "../"
+    :path: "./"
 
 SPEC CHECKSUMS:
   URLNavigator: 2593c0e2d293732ec5c44503cf54dceba1a68085
-  URLNavigatorExt: 9bc9c2f6fa7e47fc35ae5be087dcd5c731f7cdcc
+  URLNavigatorExt: fa315843d3498aa5955950a915aa2212c832bfc7
 
-PODFILE CHECKSUM: c7aba8b84c89cc21a3dce775bc16ffbde59fba18
+PODFILE CHECKSUM: a7c92b001813b6e4c1bcc26250e523759ee40a81
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3

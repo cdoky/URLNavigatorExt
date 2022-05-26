@@ -1,6 +1,0 @@
-   sources:
-       - ./URLNavigatorExt
-   templates:
-       - ./URLNavigatorExt/templates
-   output:
-       ./URLNavigatorExt/generated
