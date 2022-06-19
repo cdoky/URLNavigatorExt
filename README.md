@@ -74,9 +74,9 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 // sourcery: router: parameter="p7:Int64"
 // sourcery: router: parameter="blk:(()->Void)?"
 class ViewController: UIViewController, Navigatorible {
-    var navigator: NavigatorType
+    var navigator: NavigatorProtocol
     var parameter: Router.PRHome_page?
-    required init(navigator: NavigatorType, parameterible: Parameterible?) {
+    required init(navigator: NavigatorProtocol, parameterible: Parameterible?) {
         self.navigator = navigator
         super.init(nibName: nil, bundle: nil)
         self.parameter = parameterible as? Router.PRHome_page

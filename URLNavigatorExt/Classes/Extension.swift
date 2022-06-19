@@ -8,7 +8,7 @@ extension Navigator {
     /// - Parameters:
     ///   - navigator: navigator
     ///   - routers: key: namespace://host/path
-    public static func register(_ navigator: NavigatorType, routers: [String: Parameterible.Type?]) {
+    public static func register(_ navigator: NavigatorProtocol, routers: [String: Parameterible.Type?]) {
         for (url, param) in routers {
             // 只能通过push, present,
             navigator.register(url, self.ViewControllerFactory(navigator: navigator, parameterible: param))
@@ -21,7 +21,7 @@ extension Navigator {
     ///   - navigator: navigator
     ///   - parameterible: parameterible type
     /// - Returns: ViewControllerFactory
-    private static func ViewControllerFactory(navigator: NavigatorType, parameterible: Parameterible.Type?) ->ViewControllerFactory {
+    private static func ViewControllerFactory(navigator: NavigatorProtocol, parameterible: Parameterible.Type?) ->ViewControllerFactory {
         return { url, values, context in
             guard let url = url.urlValue else { return nil }
             guard let scheme = url.scheme,
@@ -52,7 +52,7 @@ extension Navigator {
     ///   - parameter: 参数
     /// - Returns: UIViewController
     public class func instance(_ fullPath: String,
-                  navigator: NavigatorType!,
+                  navigator: NavigatorProtocol!,
                   parameter: Parameterible?) -> UIViewController? {
         guard let clazz = NSClassFromString("\(fullPath)") as? Navigatorible.Type else {
             return nil;
@@ -77,8 +77,8 @@ extension Navigator {
 
 }
 
-// MARK: - 扩展NavigatorType
-extension NavigatorType {
+// MARK: - 扩展NavigatorProtocol
+extension NavigatorProtocol {
 
     /// pop
     ///
