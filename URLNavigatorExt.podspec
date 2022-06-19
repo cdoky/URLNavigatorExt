@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'URLNavigatorExt'
-  s.version          = '2.1.0'
+  s.version          = '2.2.0'
   s.summary          = '使用注解自动生成Router以及Router相关参数'
 
   s.homepage         = 'https://github.com/cdoky/URLNavigatorExt'
