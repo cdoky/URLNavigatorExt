@@ -1,5 +1,5 @@
 PODS:
-  - URLNavigator (2.3.0)
+  - URLNavigator (2.4.1)
   - URLNavigatorExt (2.1.0):
     - URLNavigator
 
@@ -15,8 +15,8 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  URLNavigator: 2593c0e2d293732ec5c44503cf54dceba1a68085
-  URLNavigatorExt: fa315843d3498aa5955950a915aa2212c832bfc7
+  URLNavigator: 9e277a422a5c131a3e37970c2558e0e866cc22bd
+  URLNavigatorExt: 712e3cb67383616b1f75d1e97a6cdbb0e40ba1ec
 
 PODFILE CHECKSUM: a7c92b001813b6e4c1bcc26250e523759ee40a81
 

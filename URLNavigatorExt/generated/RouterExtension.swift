@@ -20,7 +20,7 @@ public class Scheme {
 }
 
 extension Router {
-    public static func registOuterUrl(jsonStr: String, navigator: NavigatorType) {
+    public static func registOuterUrl(jsonStr: String, navigator: NavigatorProtocol) {
         guard let dict = try? JSONSerialization.jsonObject(with: jsonStr.data(using: .utf8)!) as? [String: Any],
             let router = dict?["router"] as? [Any]
             else { return }
@@ -63,7 +63,7 @@ extension Router {
     ///   - navigator: <#navigator description#>
     ///   - parameterible: <#parameterible description#>
     /// - Returns: <#return value description#>
-    private static func ViewControllerFactory(navigator: NavigatorType, parameterible: Parameterible.Type?) -> ViewControllerFactory {
+    private static func ViewControllerFactory(navigator: NavigatorProtocol, parameterible: Parameterible.Type?) -> ViewControllerFactory {
         return { url, values, context in
             guard let url = url.urlValue,
                 let ori_scheme = url.scheme,

@@ -9,7 +9,7 @@ public extension Navigator {
     ///   - navigator: navigator
     ///   - routers: key: namespace://host/path
     static func register(
-        _ navigator: NavigatorType,
+        _ navigator: NavigatorProtocol,
         routers: [String: Parameterible.Type?])
     {
         routers.forEach { url, param in
@@ -85,7 +85,7 @@ public extension Navigator {
 
 // MARK: - 扩展NavigatorType
 
-public extension NavigatorType {
+public extension NavigatorProtocol {
     var topMostNavigation: UINavigationController? {
         UIViewController.topMost?.navigationController
     }
