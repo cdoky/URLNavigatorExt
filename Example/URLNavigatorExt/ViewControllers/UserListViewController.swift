@@ -14,7 +14,7 @@ class UserListViewController: UIViewController {
 
   // MARK: Properties
 
-  private let navigator: NavigatorType
+  private let navigator: NavigatorProtocol
   let users = [
     User(name: "devxoul", urlString: "\(Scheme.domain)/user/detail?name=devxoul"),
     User(name: "apple", urlString: "\(Scheme.domain)/user/detail?name=apple"),
@@ -32,7 +32,7 @@ class UserListViewController: UIViewController {
 
   // MARK: Initializing
 
-  init(navigator: NavigatorType) {
+  init(navigator: NavigatorProtocol) {
     self.navigator = navigator
     super.init(nibName: nil, bundle: nil)
     self.title = "GitHub Users"

@@ -23,9 +23,9 @@ enum Sex: Int {
 // sourcery: router: parameter="name:String"
 // sourcery: router: parameter="sex:Sex?"
 final class UserViewController: UIViewController, Navigatorible {
-    var navigator: NavigatorType!
+    var navigator: NavigatorProtocol!
     private var parameter: Router.PRUser_Detail?
-    init(navigator: NavigatorType, parameterible: Parameterible?) {
+    init(navigator: NavigatorProtocol, parameterible: Parameterible?) {
         self.navigator = navigator
         super.init(nibName: nil, bundle: nil)
         self.parameter = parameterible as? Router.PRUser_Detail
@@ -43,7 +43,7 @@ final class UserViewController: UIViewController, Navigatorible {
 
   // MARK: Initializing
 
-  init(navigator: NavigatorType, username: String) {
+  init(navigator: NavigatorProtocol, username: String) {
     self.navigator = navigator
     super.init(nibName: nil, bundle: nil)
     self.title = "\(username)'s Repositories"
