@@ -1,11 +1,11 @@
-<%_
+<%_ 
 var loopIndex: Int = -1
-
+let mediatorName = "iOSApp"
 let routeible = "Navigatorible"
 let parameterible = "Parameterible"
 let typeible = "Typeible"
 // config your domain(eg: app://www.google.com)
-let domain = #"\(Scheme.domain)"#
+let domain = #"kycc://know.org"#
 // let domain = #"app://www.google.com"#
 
 extension String {
@@ -21,7 +21,7 @@ extension String {
 }
 
 /// 支持返回序列化的自定义参数类型
-var type_dict = types.all.reduce([String: Type]()) { dict, type -> [String: Type] in
+var type_dict = types.all.reduce([String: Type]()) { dict, type -> [String: Type] in 
     var dict = dict
     dict[type.name] = type
     return dict
@@ -48,7 +48,7 @@ struct Parameter {
     }
 
     static func decode(by parameter: Any) -> [Parameter] {
-        let defaultTypes = ["String", "Int", "Int32", "Int64",
+        let defaultTypes = ["String", "Int", "Int32", "Int64", 
             "Int8", "Float", "Double", "Bool", "Boolean"]
         guard let queryItems = parameter as? NSArray else {
             if let query = parameter as? String {
@@ -90,7 +90,7 @@ struct Parameter {
     }
 
     /// 回调函数 ()->
-    /// 查找 ^[^(|)|-|>|/]+$ 不能包含()->,
+    /// 查找 ^[^(|)|-|>|/]+$ 不能包含()->, 
     /// 如果数量为0，则为回调函数，不支持，否则不是回调函数类型，支持
     static func unSupport(for type: String) -> Bool {
         let checkReg = try! NSRegularExpression(pattern: #"^[^(|)|-|>|/]+$"#, options: NSRegularExpression.Options.caseInsensitive)
@@ -116,7 +116,13 @@ struct Router {
             path = "/\(path)"
         }
         let parameter = annotation.value(forKey: "parameter") ?? nil
-        return Router(desc: desc, name: name, path: path, view: view, module: module, parameters: parameter == nil ? [] : Parameter.decode(by: parameter))
+        return Router(
+            desc: desc.replacingOccurrences(of: "\"", with: ""), 
+            name: name.replacingOccurrences(of: "\"", with: ""), 
+            path: path.replacingOccurrences(of: "\"", with: ""), 
+            view: view.replacingOccurrences(of: "\"", with: ""), 
+            module: module.replacingOccurrences(of: "\"", with: ""),
+            parameters: parameter == nil ? [] : Parameter.decode(by: parameter))
     }
 }
 
@@ -125,12 +131,12 @@ var routers = [Router]()
 
 /// 构建router
 for type in types.all where type.inheritedTypes.contains("\(routeible)") {
-        if let annotation = type.annotations["router"],
-        annotation.value(forKey: "name") != nil,
+        if let annotation = type.annotations["router"], 
+        annotation.value(forKey: "name") != nil, 
         annotation.value(forKey: "path") != nil {
         let router = Router.decode(by: annotation, view: type.name)
         routers.append(router)
-    }
+    } 
 }
 
 let dateFormatter = DateFormatter.init()
@@ -138,14 +144,28 @@ dateFormatter.timeZone = TimeZone(identifier: "Asia/Shanghai")
 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 print("// Create Time:", dateFormatter.string(from: Date()))
 -%>
-import URLNavigatorExt
 import URLNavigator
+import URLNavigatorExt
+fileprivate let modelName = "<%= mediatorName %>"
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
-public enum Router {
-    static var urlPages = [String: PageConfig]()
+public extension Mediator {
+    /// 注册模块
+    func install<%= mediatorName %>() {
+        self.registered(
+            self.mediator.PageInfo,
+            parameters: self.mediator.parameter)
+    }
+    
+    private var mediator: R_<%= mediatorName %> {
+        return R_<%= mediatorName %>()
+    }
+}
 
+public class R_<%= mediatorName %> {
+    fileprivate init() {
+        
+    }
+    // =================generated path======================
     <%_# generate path -%>
     <%_ for router in routers { -%>
     /// desc: <%= router.desc %>
@@ -156,57 +176,47 @@ public enum Router {
     <%_ } else {
        for parameter in router.parameters { -%>
     ///     - <%= parameter.name %>: <%= parameter.typeFormat %> <%= parameter.defaultValue == nil ? "" : "default: \(parameter.defaultValue!)" %>
-        <%_ if let type = type_dict[parameter.type],
+        <%_ if let type = type_dict[parameter.type], 
             type.kind == "enum",
-            let cases = type.value(forKey: "cases") as? [EnumCase] {
+            let cases = type.value(forKey: "cases") as? [EnumCase] { 
             var rawValue: Int = 0
-            for _case in cases {
+            for _case in cases { 
                 rawValue = Int(_case.rawValue ?? "") ?? rawValue
                 -%>
     ///         - <%= _case.name %>: <%= _case.rawValue ?? "\(rawValue)" %>
-            <%_
+            <%_ 
             rawValue += 1
-            }
+            } 
          } -%>
-       <%_ }
+       <%_ } 
     }-%>
-    public static let <%= router.name %> = "<%= domain %><%= router.path %>"
+    public static let <%= router.name %> = "<%= router.path %>"
 
     <%_ } -%>
-    <%_# generate parameter types -%>
-    /// MARK: parameter type dic
-    static let urlParas: [String: <%= parameterible %>.Type?] = [
-        <%_ if routers.isEmpty { -%>
-            :
-        <%_ } else { -%>
-        <%_ loopIndex = 0;
-        for router in routers {
-            loopIndex += 1  -%>
-        Router.<%= router.name %>: <%= router.parameters.isEmpty ? "nil" : "Router.PR\(router.name.structSuffix()).self" %><%= loopIndex == routers.count ? "" : "," %>
-        <%_ } -%>
-        <%_ } -%>
-    ]
+}
 
+/// 参数数据结构
+public extension R_<%= mediatorName %> {
     <%_# generate page parameter -%>
     <%_ for router in routers where !router.parameters.isEmpty { -%>
     /// desc: <%= router.desc %>
     /// view: <%= router.view %>
     /// path: <%= router.path %>
     /// name: <%= router.name %>
-    public struct PR<%= router.name.structSuffix() %>: <%= parameterible %> {
+    struct PR<%= router.name.structSuffix() %>: <%= parameterible %> {
         <%_ for parameter in router.parameters { -%>
-        var <%= parameter.name %>: <%= parameter.typeFormat %>
+        public var <%= parameter.name %>: <%= parameter.typeFormat %>
         <%_ } -%>
-        public fileprivate (set) var queries: [String : String] = [:]
+        public fileprivate (set) var queries: [String: Any] = [:]
 
-        init(
-            <%_
+        public init(
+            <%_ 
             let requiredList = Array(router.parameters.filter{ !$0.isOpt }.reversed())
             let optionalList = Array(router.parameters.filter{ $0.isOpt }.reversed())
             let sortedParameters = requiredList + optionalList
             loopIndex = 0
             for parameter in sortedParameters { -%>
-            <%= parameter.name %>: <%= parameter.typeFormat -%><%= parameter.isOpt ? " = nil" : "" %> <%_
+            <%= parameter.name %>: <%= parameter.typeFormat -%><%= parameter.isOpt ? " = nil" : "" %> <%_ 
                 loopIndex += 1
                 if loopIndex < sortedParameters.count {
                     print(",")
@@ -246,12 +256,12 @@ public enum Router {
             <%_# end for -%>
         }
 
-        public static func instance(by queryItem: [String: String]) -> Self? {
+        public static func instance(by queryItem: [String: Any]) -> Self? {
             <%_ if !(sortedParameters.filter{ !$0.unSupport }.isEmpty) { -%>
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
-            let dict = [String: String](uniqueKeysWithValues: items)
+            let dict = [String: Any](uniqueKeysWithValues: items)
             <%_ } -%>
-            <%_ for (i, parameter) in sortedParameters.enumerated() where parameter.unSupport == false  {
+            <%_ for (i, parameter) in sortedParameters.enumerated() where parameter.unSupport == false  { 
                 let varName = i < requiredList.count ? "_\(parameter.name)" : "\(parameter.name)" -%>
 
             <%_# 构建默认参数 -%>
@@ -259,12 +269,12 @@ public enum Router {
             var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = <%= parameter.type == "String" ? "\"\(value)\"" : value %>
             <%_ } else if parameter.type == "String" { -%>
             <%_# // do: fixed: error: Segmentation fault: 11 -%>
-            let <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = dict["<%= parameter.name.lowercased() %>"]
+            let <%= varName %> = dict["<%= parameter.name.lowercased() %>"] as? <%= parameter.typeFormat %>
             <%_ continue; } else { -%>
             var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %>
             <%_ } -%>
             <%_ if parameter.isArray && !(type_dict[parameter.type]?.inheritedTypes.contains("\(typeible)") ?? false)  { continue } -%>
-            if let value = dict["<%= parameter.name.lowercased() %>"] {
+            if let value = dict["<%= parameter.name.lowercased() %>"] as? String {
                 <%_# begin if type.kind == "enum" -%>
                 <%_ if let type = type_dict[parameter.type], type.kind == "enum" { -%>
                 <%_ if "\(type.value(forKey: "rawTypeName") ?? "")" == "String" { -%>
@@ -302,8 +312,8 @@ public enum Router {
             <%_# // return Self() -%>
             <%_ } -%>
             return PR<%= router.name.structSuffix() %>(
-            <%_ loopIndex = 0;
-            for parameter in sortedParameters {
+            <%_ loopIndex = 0; 
+            for parameter in sortedParameters { 
             loopIndex += 1 -%>
                 <%= parameter.name %>: <%= parameter.unSupport ? "nil" : parameter.name %><%= loopIndex == sortedParameters.count ? "" : "," %>
             <%_ } -%>
@@ -312,44 +322,40 @@ public enum Router {
     }
 
     <%_ } -%>
-    struct PageConfig {
-        let desc: String
-        let url: String
-        let page: URL
-        let priority: Int
-    }
+}
 
-    static let pageConfigs = """
+extension R_<%= mediatorName %> {
+    fileprivate var parameter: [String: Parameterible.Type?] {
+        return [
+        <%_ if routers.isEmpty { -%>
+            :
+        <%_ } else { -%>
+        <%_ loopIndex = 0; 
+        for router in routers {
+            loopIndex += 1  -%>
+        Self.<%= router.name %>: <%= router.parameters.isEmpty ? "nil" : "Self.PR\(router.name.structSuffix()).self" %><%= loopIndex == routers.count ? "" : "," %>
+        <%_ } -%>
+        <%_ } -%>
+        ]
+    }
+    
+    fileprivate var PageInfo: String {
+        return """
         {
             "router": [
                 <%_ loopIndex = 0;
-                    for router in routers where router.module == "native" {
+                    for router in routers {
                     loopIndex += 1 -%>
                 {
                     "desc": "<%= router.desc %>",
                     "path": "<%= router.path %>",
-                    "page": "<%= router.view %>",
+                    "page": "<%= mediatorName %>.<%= router.view %>",
+                    "isFlutter": <%= router.module.lowercased() == "flutter" ? true : false %>,
                     "priority": 1
                 }<%= loopIndex == routers.count ? "" : "," %>
                 <%_ }-%>
             ]
         }
     """
-
-    static let flutterRouters = """
-        {
-            "router": [
-                <%_ loopIndex = 0;
-                    for router in routers where router.module == "flutter" {
-                    loopIndex += 1 -%>
-                {
-                    "desc": "<%= router.desc %>",
-                    "path": "<%= router.path %>",
-                    "page": "<%= router.view %>",
-                    "priority": 2
-                }<%= loopIndex == routers.count ? "" : "," %>
-                <%_ }-%>
-            ]
-        }
-    """
+    }
 }

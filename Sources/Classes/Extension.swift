@@ -66,7 +66,7 @@ public extension Navigator {
         guard let clazz = NSClassFromString("\(fullPath)") as? Navigatorible.Type else {
             return nil
         }
-        return clazz.init(parameterible: parameter) as? UIViewController
+        return clazz.init(params: parameter) as? UIViewController
     }
 
     /// return Parameterible instance

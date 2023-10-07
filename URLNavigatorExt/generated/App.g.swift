@@ -1,14 +1,29 @@
-// Generated using Sourcery 1.6.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 2.1.1 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
-// Create Time: 2022-01-15 17:01:01
-import URLNavigatorExt
+
+// Create Time: 2023-10-07 12:33:16
 import URLNavigator
+import URLNavigatorExt
+fileprivate let modelName = "iOSApp"
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
-public enum Router {
-    static var urlPages = [String: PageConfig]()
+//public extension Mediator {
+//    /// 注册模块
+//    func installiOSApp() {
+//        self.registered(
+//            self.mediator.PageInfo,
+//            parameters: self.mediator.parameter)
+//    }
+//    
+//    private var mediator: R_iOSApp {
+//        return R_iOSApp()
+//    }
+//}
 
+public class R_iOSApp {
+    fileprivate init() {
+        
+    }
+    // =================generated path======================
     /// desc: user detail page
     /// view: UserViewController
     /// parameters:
@@ -18,24 +33,23 @@ public enum Router {
     ///         - famale: 2
     ///     - name: String 
     ///     - code: Int? 
-    public static let user_detail = "\(Scheme.domain)/user/detail"
+    public static let user_detail = "/user/detail"
 
-    /// MARK: parameter type dic
-    static let urlParas: [String: Parameterible.Type?] = [
-        Router.user_detail: Router.PRUser_Detail.self
-    ]
+}
 
+/// 参数数据结构
+public extension R_iOSApp {
     /// desc: user detail page
     /// view: UserViewController
     /// path: /user/detail
     /// name: user_detail
-    public struct PRUser_Detail: Parameterible {
-        var sex: Sex?
-        var name: String
-        var code: Int?
-        public fileprivate (set) var queries: [String : Any] = [:]
+    struct PRUser_Detail: Parameterible {
+        public var sex: Sex?
+        public var name: String
+        public var code: Int?
+        public fileprivate (set) var queries: [String: Any] = [:]
 
-        init(
+        public init(
             name: String,
             code: Int? = nil,
             sex: Sex? = nil
@@ -56,15 +70,15 @@ public enum Router {
             let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
             let dict = [String: Any](uniqueKeysWithValues: items)
 
-            let _name: String? = dict["name"]
+            let _name = dict["name"] as? String
 
             var code: Int?
-            if let value = dict["code"] {
+            if let value = dict["code"] as? String {
                 code = Int(value)
             }
 
             var sex: Sex?
-            if let value = dict["sex"] {
+            if let value = dict["sex"] as? String {
                 if let _value = Int(value), let _enum = Sex(rawValue: _value) {
                     sex = _enum
                 }
@@ -80,30 +94,28 @@ public enum Router {
         }
     }
 
-    struct PageConfig {
-        let desc: String
-        let url: String
-        let page: URL
-        let priority: Int
-    }
+}
 
-    static let pageConfigs = """
+extension R_iOSApp {
+    fileprivate var parameter: [String: Parameterible.Type?] {
+        return [
+        Self.user_detail: Self.PRUser_Detail.self
+        ]
+    }
+    
+    fileprivate var PageInfo: String {
+        return """
         {
             "router": [
                 {
                     "desc": "user detail page",
                     "path": "/user/detail",
-                    "page": "UserViewController",
+                    "page": "iOSApp.UserViewController",
+                    "isFlutter": false,
                     "priority": 1
                 }
             ]
         }
     """
-
-    static let flutterRouters = """
-        {
-            "router": [
-            ]
-        }
-    """
+    }
 }

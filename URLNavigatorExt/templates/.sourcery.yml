@@ -1,0 +1,6 @@
+sources:
+    - ./iOSApp
+templates:
+    - ./mediator.swifttemplate
+output:
+    ../AppMediator/Sources/Routers/iOSApp.g.swift

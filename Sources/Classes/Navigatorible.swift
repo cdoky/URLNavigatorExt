@@ -8,12 +8,11 @@
 import URLNavigator
 
 /// Navigatorible
+@objc
 public protocol Navigatorible {
     /// 初始化协议
     ///
     /// - Parameters:
-    ///   - navigator: 导航对象
-    ///   - parameterible: 参数对象
-    ///   - values: 参数对象
-    init(parameterible: Parameterible?)
+    ///   - params: 参数对象
+    init(params: Any?)
 }

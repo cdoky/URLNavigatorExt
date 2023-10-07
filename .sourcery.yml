@@ -1,6 +1,7 @@
 sources:
     - ./URLNavigatorExt
 templates:
-    - ./URLNavigatorExt/templates
+    #- ./URLNavigatorExt/templates/mediator.swifttemplate
+    - ./mediator.swifttemplate
 output:
-    ./URLNavigatorExt/generated
+    ./URLNavigatorExt/generated/App.g.swift

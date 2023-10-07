@@ -10,7 +10,7 @@ import UIKit
 import URLNavigator
 import URLNavigatorExt
 
-enum Sex: Int {
+public enum Sex: Int {
     case unknow = 0
     case male = 1
     case famale = 2

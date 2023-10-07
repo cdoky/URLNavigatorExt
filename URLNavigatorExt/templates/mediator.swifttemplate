@@ -1,0 +1,355 @@
+<%_
+var loopIndex: Int = -1
+
+let routeible = "Navigatorible"
+let parameterible = "Parameterible"
+let typeible = "Typeible"
+// config your domain(eg: app://www.google.com)
+let domain = #"\(Scheme.domain)"#
+// let domain = #"app://www.google.com"#
+
+extension String {
+    func capitaliz() -> String {
+        var temp = self
+        return "\(String(temp.first!).capitalized)\(String(temp.lowercased().dropFirst()))"
+    }
+
+    func structSuffix() -> String {
+        var temp = self.split(separator: "_")
+        return temp.map{ "\($0)".capitaliz() }.joined(separator: "_")
+    }
+}
+
+/// 支持返回序列化的自定义参数类型
+var type_dict = types.all.reduce([String: Type]()) { dict, type -> [String: Type] in
+    var dict = dict
+    dict[type.name] = type
+    return dict
+}
+
+struct Parameter {
+    let name: String
+    let type: String
+    let isOpt: Bool
+    let isArray: Bool
+    let unSupport: Bool
+    let defaultValue: String?
+
+    /// return: type or [type] or [type]? or type?
+    var typeFormat: String {
+        var type = self.type
+        if self.isArray {
+            type = "[\(type)]"
+        }
+        if self.isOpt {
+            type = "\(type)?"
+        }
+        return type
+    }
+
+    static func decode(by parameter: Any) -> [Parameter] {
+        let defaultTypes = ["String", "Int", "Int32", "Int64",
+            "Int8", "Float", "Double", "Bool", "Boolean"]
+        guard let queryItems = parameter as? NSArray else {
+            if let query = parameter as? String {
+                let items = query.split(separator: ":")
+                if items.count < 2 { return [] }
+                let varName = String(items[0]).trimmingCharacters(in: .whitespacesAndNewlines)
+                var varType = String(items[1]).trimmingCharacters(in: .whitespacesAndNewlines)
+                var varIsOption = self.isOptional(for: varType)
+                let varIsArray = self.isArray(for: varType)
+                var varUnSupport = self.unSupport(for: varType)
+                if varIsOption && varType.hasSuffix("?") {
+                    varType = "\(varType.dropLast())"
+                }
+                if varIsArray {
+                    varType = "\(varType.dropFirst().dropLast())"
+                }
+                if varIsArray, !(type_dict[varType]?.inheritedTypes.contains("\(typeible)") ?? false) {
+                    varUnSupport = true
+                } else if type_dict[varType]?.kind != "enum" && !defaultTypes.contains(varType) {
+                    varUnSupport = true
+                }
+                if varUnSupport {
+                    varIsOption = true
+                }
+                let defaultValue: String? = items.count >= 3 ? String(items[2]) : nil
+                return [Parameter(name: varName, type: varType, isOpt: varIsOption, isArray: varIsArray, unSupport: varUnSupport, defaultValue: defaultValue)]
+            }
+            return []
+        }
+        return queryItems.flatMap{ self.decode(by: $0) }
+    }
+
+    static func isOptional(for type: String) -> Bool {
+        return type.hasSuffix("?")
+    }
+
+    static func isArray(for type: String) -> Bool {
+        return type.hasPrefix("[") && (type.hasSuffix("]") || type.hasSuffix("]?"))
+    }
+
+    /// 回调函数 ()->
+    /// 查找 ^[^(|)|-|>|/]+$ 不能包含()->,
+    /// 如果数量为0，则为回调函数，不支持，否则不是回调函数类型，支持
+    static func unSupport(for type: String) -> Bool {
+        let checkReg = try! NSRegularExpression(pattern: #"^[^(|)|-|>|/]+$"#, options: NSRegularExpression.Options.caseInsensitive)
+        let checked = checkReg.matches(in: type, options: .reportCompletion, range: NSRange.init(location: 0, length: type.count))
+        return (checked.count == 0)
+    }
+}
+
+struct Router {
+    let desc: String
+    let name: String
+    let path: String
+    let view: String
+    let module: String
+    let parameters: [Parameter]
+
+    static func decode(by annotation: NSObject, view: String) -> Router {
+        let desc = annotation.value(forKey: "desc") as? String ?? ""
+        let name = annotation.value(forKey: "name") as? String ?? "unknow"
+        var path = annotation.value(forKey: "path") as? String ?? "unknow"
+        var module = annotation.value(forKey: "module") as? String ?? "native"
+        if !path.hasPrefix("/") {
+            path = "/\(path)"
+        }
+        let parameter = annotation.value(forKey: "parameter") ?? nil
+        return Router(desc: desc, name: name, path: path, view: view, module: module, parameters: parameter == nil ? [] : Parameter.decode(by: parameter))
+    }
+}
+
+// new
+var routers = [Router]()
+
+/// 构建router
+for type in types.all where type.inheritedTypes.contains("\(routeible)") {
+        if let annotation = type.annotations["router"],
+        annotation.value(forKey: "name") != nil,
+        annotation.value(forKey: "path") != nil {
+        let router = Router.decode(by: annotation, view: type.name)
+        routers.append(router)
+    }
+}
+
+let dateFormatter = DateFormatter.init()
+dateFormatter.timeZone = TimeZone(identifier: "Asia/Shanghai")
+dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+print("// Create Time:", dateFormatter.string(from: Date()))
+-%>
+import URLNavigatorExt
+import URLNavigator
+
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
+public enum Router {
+    static var urlPages = [String: PageConfig]()
+
+    <%_# generate path -%>
+    <%_ for router in routers { -%>
+    /// desc: <%= router.desc %>
+    /// view: <%= router.view %>
+    /// parameters:
+    <%_ if router.parameters.isEmpty { -%>
+    ///     - None
+    <%_ } else {
+       for parameter in router.parameters { -%>
+    ///     - <%= parameter.name %>: <%= parameter.typeFormat %> <%= parameter.defaultValue == nil ? "" : "default: \(parameter.defaultValue!)" %>
+        <%_ if let type = type_dict[parameter.type],
+            type.kind == "enum",
+            let cases = type.value(forKey: "cases") as? [EnumCase] {
+            var rawValue: Int = 0
+            for _case in cases {
+                rawValue = Int(_case.rawValue ?? "") ?? rawValue
+                -%>
+    ///         - <%= _case.name %>: <%= _case.rawValue ?? "\(rawValue)" %>
+            <%_
+            rawValue += 1
+            }
+         } -%>
+       <%_ }
+    }-%>
+    public static let <%= router.name %> = "<%= domain %><%= router.path %>"
+
+    <%_ } -%>
+    <%_# generate parameter types -%>
+    /// MARK: parameter type dic
+    static let urlParas: [String: <%= parameterible %>.Type?] = [
+        <%_ if routers.isEmpty { -%>
+            :
+        <%_ } else { -%>
+        <%_ loopIndex = 0;
+        for router in routers {
+            loopIndex += 1  -%>
+        Router.<%= router.name %>: <%= router.parameters.isEmpty ? "nil" : "Router.PR\(router.name.structSuffix()).self" %><%= loopIndex == routers.count ? "" : "," %>
+        <%_ } -%>
+        <%_ } -%>
+    ]
+
+    <%_# generate page parameter -%>
+    <%_ for router in routers where !router.parameters.isEmpty { -%>
+    /// desc: <%= router.desc %>
+    /// view: <%= router.view %>
+    /// path: <%= router.path %>
+    /// name: <%= router.name %>
+    public struct PR<%= router.name.structSuffix() %>: <%= parameterible %> {
+        <%_ for parameter in router.parameters { -%>
+        var <%= parameter.name %>: <%= parameter.typeFormat %>
+        <%_ } -%>
+        public fileprivate (set) var queries: [String: Any] = [:]
+
+        init(
+            <%_
+            let requiredList = Array(router.parameters.filter{ !$0.isOpt }.reversed())
+            let optionalList = Array(router.parameters.filter{ $0.isOpt }.reversed())
+            let sortedParameters = requiredList + optionalList
+            loopIndex = 0
+            for parameter in sortedParameters { -%>
+            <%= parameter.name %>: <%= parameter.typeFormat -%><%= parameter.isOpt ? " = nil" : "" %> <%_
+                loopIndex += 1
+                if loopIndex < sortedParameters.count {
+                    print(",")
+                }
+            -%>
+            <%_ } %>
+        ) {
+            <%_ for parameter in router.parameters { -%>
+            self.<%= parameter.name %> = <%= parameter.name %>
+            <%_# 构建必选参数 -%>
+                <%_ if ["Int", "Int8", "Int32", "Int16", "Int64", "Double", "Float", "String"].contains(parameter.typeFormat) { -%>
+            self.queries["<%= parameter.name %>"] = String(describing: <%= parameter.name %>)
+                <%_ } -%>
+                <%_# end if -%>
+            <%_# 构建可选参数 -%>
+                <%_ if ["Int", "Int8", "Int32", "Int16", "Int64", "Double", "Float", "String"].map{ $0 + "?"}.contains(parameter.typeFormat) { -%>
+            if let v = <%= parameter.name %> {
+                self.queries["<%= parameter.name %>"] = String(describing: v)
+            }
+                <%_ } -%>
+                <%_# end if -%>
+            <%_# 构建枚举参数 -%>
+                <%_ if let type = type_dict[parameter.type], type.kind == "enum" { -%>
+                    <%_# 枚举参数必须是String或Int类型 -%>
+                    <%_ if let rawTypeName = type.value(forKey: "rawTypeName"), ("\(rawTypeName)" == "String" || "\(rawTypeName)" == "Int") { -%>
+                        <%_ if parameter.isOpt {-%>
+            if let v = <%= parameter.name %> {
+                self.queries["<%= parameter.name %>"] = String(describing: v.rawValue)
+            }
+                        <%_ } else { -%>
+            self.queries["<%= parameter.name %>"] = String(describing: <%= parameter.name %>.rawValue)
+                        <%_ } -%>
+                    <%_ } -%>
+                <%_ } -%>
+                <%_# end if -%>
+            <%_ } -%>
+            <%_# end for -%>
+        }
+
+        public static func instance(by queryItem: [String: Any]) -> Self? {
+            <%_ if !(sortedParameters.filter{ !$0.unSupport }.isEmpty) { -%>
+            let items = queryItem.map({ ($0.key.lowercased(), $0.value) })
+            let dict = [String: Any](uniqueKeysWithValues: items)
+            <%_ } -%>
+            <%_ for (i, parameter) in sortedParameters.enumerated() where parameter.unSupport == false  { 
+                let varName = i < requiredList.count ? "_\(parameter.name)" : "\(parameter.name)" -%>
+
+            <%_# 构建默认参数 -%>
+            <%_ if let value = parameter.defaultValue { -%>
+            var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %> = <%= parameter.type == "String" ? "\"\(value)\"" : value %>
+            <%_ } else if parameter.type == "String" { -%>
+            <%_# // do: fixed: error: Segmentation fault: 11 -%>
+            let <%= varName %> = dict["<%= parameter.name.lowercased() %>"] as? <%= parameter.typeFormat %>
+            <%_ continue; } else { -%>
+            var <%= varName %>: <%= parameter.typeFormat %><%= parameter.isOpt ? "" : "?" %>
+            <%_ } -%>
+            <%_ if parameter.isArray && !(type_dict[parameter.type]?.inheritedTypes.contains("\(typeible)") ?? false)  { continue } -%>
+            if let value = dict["<%= parameter.name.lowercased() %>"] as? String {
+                <%_# begin if type.kind == "enum" -%>
+                <%_ if let type = type_dict[parameter.type], type.kind == "enum" { -%>
+                <%_ if "\(type.value(forKey: "rawTypeName") ?? "")" == "String" { -%>
+                if let _enum = <%= parameter.type %>(rawValue: value) {
+                    <%= varName %> = _enum
+                }
+                <%_ } else { -%>
+                if let _value = Int(value), let _enum = <%= parameter.type %>(rawValue: _value) {
+                    <%= varName %> = _enum
+                }
+                <%_ } -%>
+                <%_ } else if let type = type_dict[parameter.type], type.inheritedTypes.contains("\(typeible)") { -%>
+                <%_# // do: check parameter type is $typeible -%>
+                <%_ if parameter.isArray { -%>
+                <%= varName %> = <%= parameter.type %>.list(from: value)
+                <%_ } else { -%>
+                <%= varName %> = <%= parameter.type %>.instance(from: value)
+                <%_}-%>
+                <%_ } else if parameter.type == "String" { -%>
+                <%_# // do: check parameter type is String -%>
+                <%= varName %> = value
+                <%_ } else { -%>
+                <%_# // do: check required type is other $Type($value) -%>
+                <%= varName %> = <%= parameter.type %>(value)
+                <%_ } -%>
+            }
+            <%_} -%>
+            <%_# // do: check required parameter -%>
+            <%_ if !requiredList.isEmpty { -%>
+            guard
+            <%_ loopIndex = 0; for parameter in requiredList { loopIndex += 1 -%>
+                let <%= parameter.name %> = _<%= parameter.name %><%= loopIndex == requiredList.count ? "" : "," %>
+            <%_ } -%>
+            else { return nil }
+            <%_# // return Self() -%>
+            <%_ } -%>
+            return PR<%= router.name.structSuffix() %>(
+            <%_ loopIndex = 0; 
+            for parameter in sortedParameters { 
+            loopIndex += 1 -%>
+                <%= parameter.name %>: <%= parameter.unSupport ? "nil" : parameter.name %><%= loopIndex == sortedParameters.count ? "" : "," %>
+            <%_ } -%>
+            )
+        }
+    }
+
+    <%_ } -%>
+    struct PageConfig {
+        let desc: String
+        let url: String
+        let page: URL
+        let priority: Int
+    }
+
+    static let pageConfigs = """
+        {
+            "router": [
+                <%_ loopIndex = 0;
+                    for router in routers where router.module == "native" {
+                    loopIndex += 1 -%>
+                {
+                    "desc": "<%= router.desc %>",
+                    "path": "<%= router.path %>",
+                    "page": "<%= router.view %>",
+                    "priority": 1
+                }<%= loopIndex == routers.count ? "" : "," %>
+                <%_ }-%>
+            ]
+        }
+    """
+
+    static let flutterRouters = """
+        {
+            "router": [
+                <%_ loopIndex = 0;
+                    for router in routers where router.module == "flutter" {
+                    loopIndex += 1 -%>
+                {
+                    "desc": "<%= router.desc %>",
+                    "path": "<%= router.path %>",
+                    "page": "<%= router.view %>",
+                    "priority": 2
+                }<%= loopIndex == routers.count ? "" : "," %>
+                <%_ }-%>
+            ]
+        }
+    """
+}
