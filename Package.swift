@@ -14,7 +14,7 @@ let package = Package(
             targets: ["URLNavigatorExt"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/devxoul/URLNavigator.git", .upToNextMajor(from: "2.3.0")),
+        .package(url: "https://github.com/cdoky/URLNavigator.git", .branch("master")),
     ],
     targets: [
         .target(
